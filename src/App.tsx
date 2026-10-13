@@ -7,12 +7,14 @@ import { useFullscreen } from './hooks/useFullscreen';
 import { useNow } from './hooks/useNow';
 import { usePointerActivity } from './hooks/usePointerActivity';
 import { useScheduleState } from './hooks/useScheduleState';
+import { useWeather } from './hooks/useWeather';
 
 const App = () => {
   const debug = useDebugConfig();
   const now = useNow(250, debug.clockOffsetMs);
   const state = useScheduleState(now);
   const pointerActive = usePointerActivity(2200);
+  const weatherLive = useWeather();
   const { isFullscreen, enter } = useFullscreen();
   const pin = useCornerPin();
 
@@ -39,6 +41,9 @@ const App = () => {
           onResetPin={pin.reset}
           forcedModeIndex={debug.forcedModeIndex}
           forcedSeason={debug.forcedSeason}
+          forcedWeather={debug.forcedWeather}
+          weatherLive={weatherLive}
+          forcedHoliday={debug.forcedHoliday}
           debug={debug}
         />
       </CornerPinStage>

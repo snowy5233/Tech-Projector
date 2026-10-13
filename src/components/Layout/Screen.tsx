@@ -9,13 +9,15 @@ import {
 import { ARTWORK_MODE_COUNT } from '../Artwork/createArtworkModes';
 import type { DebugConfig } from '../../hooks/useDebugConfig';
 import type { ScheduleState } from '../../hooks/useScheduleState';
-import type { Season } from '../Seasonal/SeasonalOverlay';
+
 import { useRandomModeIndex } from '../../hooks/useRandomModeIndex';
 import { ArtworkCanvas } from '../Artwork/ArtworkCanvas';
 import { Clock } from '../Clock/Clock';
 import { DebugPanel } from '../Debug/DebugPanel';
 import { Slide, slotIndexOf } from '../Slide/Slide';
-import { SeasonalOverlay, seasonOf } from '../Seasonal/SeasonalOverlay';
+import type { Season } from '../Seasonal/SeasonalOverlay';
+import { SeasonalOverlay, seasonOf, type Weather } from '../Seasonal/SeasonalOverlay';
+import { holidayOf, type HolidayId } from '../../lib/holidays';
 import { CalibrateBar } from './CalibrateBar';
 import './screen.css';
 
@@ -49,6 +51,12 @@ export interface ScreenProps {
   forcedModeIndex: number | null;
   /** Locked season effect (?seizoen or the debug panel); null = the clock month decides. */
   forcedSeason: Season | null;
+  /** Locked weather effect; 'auto' = live weather via useWeather. */
+  forcedWeather: Weather | 'auto' | 'uit';
+  /** Live weather from useWeather, shown in the debug panel and used when 'auto'. */
+  weatherLive: Weather;
+  /** Locked holiday effect (?feest or the debug panel); null = the clock date decides. */
+  forcedHoliday: HolidayId | null;
   /** Debug controls; shown while the mouse moves. */
   debug: DebugConfig | null;
 }
@@ -62,6 +70,9 @@ export const Screen = ({
   onResetPin,
   forcedModeIndex,
   forcedSeason,
+  forcedWeather,
+  weatherLive,
+  forcedHoliday,
   debug,
 }: ScreenProps) => {
   const slot = state.currentSlot;
@@ -90,7 +101,11 @@ export const Screen = ({
         density={density}
       />
 
-      <SeasonalOverlay season={forcedSeason ?? seasonOf(now)} />
+      <SeasonalOverlay
+        season={forcedSeason ?? seasonOf(now)}
+        weather={forcedWeather === 'auto' ? weatherLive : forcedWeather === 'uit' ? null : forcedWeather}
+        holiday={forcedHoliday ?? holidayOf(now)}
+      />
 
       <div className="screen__ui">
         <Clock now={now} showDate={false} className="clock--corner" />
@@ -113,6 +128,7 @@ export const Screen = ({
           now={now}
           phase={state.phase}
           visible={pointerActive}
+          weatherLive={weatherLive ?? 'droog'}
         />
       )}
 

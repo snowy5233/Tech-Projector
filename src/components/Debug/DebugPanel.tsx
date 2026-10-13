@@ -2,7 +2,8 @@ import type { DebugConfig } from '../../hooks/useDebugConfig';
 import type { ScheduleState } from '../../hooks/useScheduleState';
 import { ARTWORK_MODE_IDS } from '../Artwork/createArtworkModes';
 import { Button } from '../ui/Button';
-import { SEASONS, seasonOf, type Season } from '../Seasonal/SeasonalOverlay';
+import { SEASONS, seasonOf, type Season, type Weather } from '../Seasonal/SeasonalOverlay';
+import { HOLIDAY_IDS, holidayOf, type HolidayId } from '../../lib/holidays';
 import './debug.css';
 
 const DAYS = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
@@ -15,6 +16,8 @@ export interface DebugPanelProps {
   now: Date;
   phase: ScheduleState['phase'];
   visible: boolean;
+  /** Live weather label for the auto option ('regen' | 'sneeuw' | 'droog'). */
+  weatherLive: Weather | 'droog';
 }
 
 /**
@@ -22,7 +25,7 @@ export interface DebugPanelProps {
  * theme. Only visible while the mouse moves, like the calibration bar, so a
  * quiet projection stays clean.
  */
-export const DebugPanel = ({ config, now, phase, visible }: DebugPanelProps) => {
+export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPanelProps) => {
   const simulate = (day: number, hours: number, minutes: number) => {
     const target = new Date();
     const delta = (day - target.getDay() + 7) % 7;
@@ -112,6 +115,40 @@ export const DebugPanel = ({ config, now, phase, visible }: DebugPanelProps) => 
         >
           <option value="auto">auto ({seasonOf(now)})</option>
           {SEASONS.map((id) => (
+            <option key={id} value={id}>
+              {id}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="debug__row">
+        <span className="u-eyebrow">weer</span>
+        <select
+          className="debug__input"
+          value={config.forcedWeather ?? 'auto'}
+          onChange={(event) =>
+            config.setForcedWeather(event.target.value as Weather | 'auto' | 'uit')
+          }
+        >
+          <option value="auto">auto ({weatherLive})</option>
+          <option value="regen">regen</option>
+          <option value="sneeuw">sneeuw</option>
+          <option value="uit">uit</option>
+        </select>
+      </label>
+      <label className="debug__row">
+        <span className="u-eyebrow">feest</span>
+        <select
+          className="debug__input"
+          value={config.forcedHoliday ?? 'auto'}
+          onChange={(event) =>
+            config.setForcedHoliday(
+              event.target.value === 'auto' ? null : (event.target.value as HolidayId),
+            )
+          }
+        >
+          <option value="auto">auto ({holidayOf(now) ?? 'geen'})</option>
+          {HOLIDAY_IDS.map((id) => (
             <option key={id} value={id}>
               {id}
             </option>
