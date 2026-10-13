@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import './seasonal.css';
 
 export type Season = 'lente' | 'zomer' | 'herfst' | 'winter';
 
