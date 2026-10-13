@@ -39,6 +39,11 @@ export const createArtworkModes = (): ArtworkMode[] => [
 
 export const ARTWORK_MODE_IDS: string[] = createArtworkModes().map((mode) => mode.id);
 
+/** Mode id -> 0-based index lookup. */
+export const ARTWORK_MODE_IDS_INDEX: Record<string, number> = Object.fromEntries(
+  ARTWORK_MODE_IDS.map((id, index) => [id, index]),
+);
+
 /**
  * Optional `?art=<id or 0-based index>` to force one artwork theme, e.g.
  * `?art=waves`. Unknown values are ignored and the schedule picks as usual.

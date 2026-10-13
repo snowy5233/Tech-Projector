@@ -39,7 +39,7 @@ const App = () => {
           canResetPin={!pin.isDefault}
           isFullscreen={isFullscreen}
           onResetPin={pin.reset}
-          forcedModeIndex={debug.forcedModeIndex}
+          forcedMode={debug.forcedMode}
           forcedSeason={debug.forcedSeason}
           forcedWeather={debug.forcedWeather}
           weatherLive={weatherLive}

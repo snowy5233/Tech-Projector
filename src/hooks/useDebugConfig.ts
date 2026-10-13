@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { forcedArtworkModeIndex } from '../components/Artwork/createArtworkModes';
+import { ARTWORK_MODE_IDS, forcedArtworkModeIndex } from '../components/Artwork/createArtworkModes';
 import { SEASONS, type Season, type Weather } from '../components/Seasonal/SeasonalOverlay';
 import { HOLIDAY_IDS, type HolidayId } from '../lib/holidays';
 import { readClockOffsetMs } from '../lib/clock-offset';
@@ -8,9 +8,9 @@ export interface DebugConfig {
   /** Simulated clock shift in ms; 0 = live clock. Seeded from `?at` / `?dow`. */
   clockOffsetMs: number;
   setClockOffsetMs: (ms: number) => void;
-  /** Locked artwork slot; null = the schedule decides. Seeded from `?art`. */
-  forcedModeIndex: number | null;
-  setForcedModeIndex: (index: number | null) => void;
+  /** Locked artwork slot: 'auto' = schedule decides, 'uit' = artwork off, or a mode id. Seeded from `?art`. */
+  forcedMode: string;
+  setForcedMode: (mode: string) => void;
   /** Locked season effect; null = derived from the clock month. Seeded from `?seizoen`. */
   forcedSeason: Season | null;
   setForcedSeason: (season: Season | null) => void;
@@ -45,15 +45,20 @@ const forcedHolidayFromUrl = (): HolidayId | null => {
 /** Runtime overrides for the debug panel, seeded from the URL preview params. */
 export const useDebugConfig = (): DebugConfig => {
   const [clockOffsetMs, setClockOffsetMs] = useState(readClockOffsetMs);
-  const [forcedModeIndex, setForcedModeIndex] = useState<number | null>(forcedArtworkModeIndex);
+  const [forcedMode, setForcedMode] = useState<string>(() => {
+    const raw = new URLSearchParams(window.location.search).get('art');
+    if (raw === 'uit') return 'uit';
+    const index = forcedArtworkModeIndex();
+    return index === null ? 'auto' : ARTWORK_MODE_IDS[index] ?? 'auto';
+  });
   const [forcedSeason, setForcedSeason] = useState<Season | null>(forcedSeasonFromUrl);
   const [forcedWeather, setForcedWeather] = useState<Weather | 'auto' | 'uit'>(forcedWeatherFromUrl);
   const [forcedHoliday, setForcedHoliday] = useState<HolidayId | null>(forcedHolidayFromUrl);
   return {
     clockOffsetMs,
     setClockOffsetMs,
-    forcedModeIndex,
-    setForcedModeIndex,
+    forcedMode,
+    setForcedMode,
     forcedSeason,
     setForcedSeason,
     forcedWeather,

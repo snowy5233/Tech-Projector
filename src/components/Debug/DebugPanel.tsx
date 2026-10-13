@@ -85,16 +85,11 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
         <span className="u-eyebrow">thema</span>
         <select
           className="debug__input"
-          value={config.forcedModeIndex === null ? 'auto' : ARTWORK_MODE_IDS[config.forcedModeIndex]}
-          onChange={(event) =>
-            config.setForcedModeIndex(
-              event.target.value === 'auto'
-                ? null
-                : ARTWORK_MODE_IDS.indexOf(event.target.value),
-            )
-          }
+          value={config.forcedMode}
+          onChange={(event) => config.setForcedMode(event.target.value)}
         >
           <option value="auto">auto (rooster)</option>
+          <option value="uit">uit</option>
           {ARTWORK_MODE_IDS.map((id) => (
             <option key={id} value={id}>
               {id}

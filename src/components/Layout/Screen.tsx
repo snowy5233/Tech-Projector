@@ -6,7 +6,7 @@ import {
   formatEventCountdownNl,
   isCountdownPassed,
 } from '../../lib/time';
-import { ARTWORK_MODE_COUNT } from '../Artwork/createArtworkModes';
+import { ARTWORK_MODE_COUNT, ARTWORK_MODE_IDS_INDEX } from '../Artwork/createArtworkModes';
 import type { DebugConfig } from '../../hooks/useDebugConfig';
 import type { ScheduleState } from '../../hooks/useScheduleState';
 
@@ -47,8 +47,8 @@ export interface ScreenProps {
   canResetPin: boolean;
   isFullscreen: boolean;
   onResetPin: () => void;
-  /** Locked artwork slot (?art or the debug panel); null = the schedule decides. */
-  forcedModeIndex: number | null;
+  /** Locked artwork theme: 'auto' = schedule decides, 'uit' = off, or a mode id. */
+  forcedMode: string;
   /** Locked season effect (?seizoen or the debug panel); null = the clock month decides. */
   forcedSeason: Season | null;
   /** Locked weather effect; 'auto' = live weather via useWeather. */
@@ -68,7 +68,7 @@ export const Screen = ({
   canResetPin,
   isFullscreen,
   onResetPin,
-  forcedModeIndex,
+  forcedMode,
   forcedSeason,
   forcedWeather,
   weatherLive,
@@ -78,7 +78,9 @@ export const Screen = ({
   const slot = state.currentSlot;
   const afterHours = state.phase === 'after';
   const randomMode = useRandomModeIndex(afterHours, ARTWORK_MODE_COUNT);
-  const modeIndex = forcedModeIndex ?? (slot ? slotIndexOf(slot) : afterHours ? randomMode : 0);
+  const forcedIndex = ARTWORK_MODE_IDS_INDEX[forcedMode] ?? null;
+  const artworkOff = forcedMode === 'uit';
+  const modeIndex = forcedIndex ?? (slot ? slotIndexOf(slot) : afterHours ? randomMode : 0);
   const title = slot ? slot.label : IDLE_TITLE[state.phase];
   const range = slot
     ? `${formatSlotTime(slot.start)}–${formatSlotTime(slot.end)}`
@@ -95,11 +97,13 @@ export const Screen = ({
 
   return (
     <div className={`screen screen--${state.phase}`}>
-      <ArtworkCanvas
-        modeIndex={modeIndex}
-        energy={ENERGY[state.phase]}
-        density={density}
-      />
+      {artworkOff || (
+        <ArtworkCanvas
+          modeIndex={modeIndex}
+          energy={ENERGY[state.phase]}
+          density={density}
+        />
+      )}
 
       <SeasonalOverlay
         season={forcedSeason ?? seasonOf(now)}
