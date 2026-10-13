@@ -1,0 +1,126 @@
+.slot {
+  display: grid;
+  grid-template-columns: calc(var(--u) * 3.1) 1fr auto calc(var(--u) * 9.5);
+  align-items: center;
+  gap: calc(var(--u) * 0.9);
+  padding: calc(var(--u) * 0.45) calc(var(--u) * 0.8);
+  border: var(--hairline) solid var(--white);
+  border-radius: calc(var(--u) * 0.4);
+  min-height: 0;
+}
+
+.slot--lesson {
+  flex: 1.25;
+}
+
+.slot--break {
+  flex: 0.9;
+  border-style: dashed;
+}
+
+.slot--active {
+  background: var(--white);
+  color: var(--black);
+  border-style: solid;
+  border-color: var(--white);
+  animation: slot-in 420ms ease-out;
+}
+
+.slot__index {
+  font-size: calc(var(--u) * 1.9);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.slot--break .slot__index {
+  font-size: calc(var(--u) * 1.2);
+  letter-spacing: 0.1em;
+}
+
+.slot__label {
+  font-size: calc(var(--u) * 2.1);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.slot--break .slot__label {
+  font-size: calc(var(--u) * 1.45);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.slot__time {
+  font-size: calc(var(--u) * 1.5);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.slot--break .slot__time {
+  font-size: calc(var(--u) * 1.2);
+}
+
+.slot__dash {
+  padding: 0 calc(var(--u) * 0.3);
+}
+
+.slot__tail {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.slot__live {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: calc(var(--u) * 0.28);
+  width: 100%;
+}
+
+.slot__bar {
+  height: calc(var(--u) * 0.5);
+}
+
+.slot__remaining {
+  font-size: calc(var(--u) * 0.95);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+/* Done vs upcoming without greys: solid block vs hollow block. */
+.slot__marker {
+  width: calc(var(--u) * 0.85);
+  height: calc(var(--u) * 0.85);
+  border: var(--border) solid var(--white);
+  border-radius: calc(var(--u) * 0.12);
+}
+
+.slot--done .slot__marker {
+  background: var(--white);
+}
+
+.slot--done .slot__index,
+.slot--done .slot__label,
+.slot--done .slot__time {
+  text-decoration: line-through;
+  text-decoration-thickness: var(--hairline);
+}
+
+@keyframes slot-in {
+  0% {
+    transform: translateX(calc(var(--u) * -0.6));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot--active {
+    animation: none;
+  }
+}

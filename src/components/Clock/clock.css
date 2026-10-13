@@ -1,0 +1,70 @@
+.clock {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 0.2);
+  align-items: flex-start;
+}
+
+.clock__date {
+  font-size: calc(var(--u) * 1.05);
+}
+
+.clock__time {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 0.3);
+  line-height: 0.85;
+}
+
+.clock__hm {
+  font-size: calc(var(--u) * 6.4);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.clock--corner {
+  position: absolute;
+  top: calc(var(--u) * 1.1);
+  left: calc(var(--u) * 1.1);
+  z-index: 2;
+  isolation: isolate;
+  padding: calc(var(--u) * 0.55) calc(var(--u) * 0.8);
+  background: var(--black);
+}
+
+.clock--corner .clock__hm {
+  font-size: calc(var(--u) * 4.8);
+}
+
+.clock--corner .clock__seconds {
+  font-size: calc(var(--u) * 1.9);
+}
+
+.clock__colon {
+  display: inline-block;
+  padding: 0 calc(var(--u) * 0.04);
+  animation: clock-colon 1s steps(1, end) infinite;
+}
+
+.clock__seconds {
+  font-size: calc(var(--u) * 2.2);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+@keyframes clock-colon {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .clock__colon {
+    animation: none;
+  }
+}

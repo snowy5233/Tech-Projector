@@ -1,0 +1,40 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 0.35);
+  padding: calc(var(--u) * 0.25) calc(var(--u) * 0.7);
+  border: var(--hairline) solid currentColor;
+  border-radius: calc(var(--u) * 2);
+  font-size: calc(var(--u) * 0.95);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge--solid {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+.badge--pulse {
+  animation: badge-blink 1.6s steps(1, end) infinite;
+}
+
+@keyframes badge-blink {
+  0%,
+  62% {
+    opacity: 1;
+  }
+  63%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .badge--pulse {
+    animation: none;
+  }
+}

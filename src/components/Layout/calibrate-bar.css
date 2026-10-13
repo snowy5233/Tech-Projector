@@ -1,0 +1,32 @@
+.calibrate {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--u) * 1.2);
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 0.8);
+  padding: calc(var(--u) * 0.45) calc(var(--u) * 0.8);
+  border: var(--hairline) solid var(--white);
+  border-radius: calc(var(--u) * 0.5);
+  background: var(--black);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 180ms ease,
+    visibility 180ms ease;
+}
+
+.calibrate--visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.calibrate__hint {
+  font-size: calc(var(--u) * 0.9);
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+}

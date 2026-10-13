@@ -1,0 +1,18 @@
+.phase-hero {
+  display: grid;
+  place-items: center;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.phase-hero__title {
+  padding: calc(var(--u) * 1.2) calc(var(--u) * 2);
+  border: var(--border) solid var(--white);
+  border-radius: var(--radius);
+  background: var(--black);
+  font-size: calc(var(--u) * 6);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}

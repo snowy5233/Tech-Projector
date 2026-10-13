@@ -1,0 +1,53 @@
+.now {
+  gap: calc(var(--u) * 0.75);
+}
+
+.now__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+}
+
+.now__title {
+  font-size: calc(var(--u) * 5.4);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+.now__times {
+  font-size: calc(var(--u) * 1.7);
+  letter-spacing: 0.06em;
+}
+
+.now__countdown {
+  margin-top: calc(var(--u) * 0.4);
+}
+
+.now__bar {
+  height: calc(var(--u) * 0.7);
+}
+
+.now__next {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap);
+  margin-top: auto;
+  padding-top: calc(var(--u) * 0.7);
+  border-top: var(--hairline) solid var(--white);
+}
+
+.now__next-value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 0.6);
+  font-size: calc(var(--u) * 1.8);
+  font-weight: 700;
+}
+
+.now__next-time {
+  font-size: calc(var(--u) * 1.35);
+  font-weight: 500;
+}

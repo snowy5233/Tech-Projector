@@ -1,0 +1,39 @@
+.countdown {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 0.4);
+}
+
+.countdown__label {
+  font-size: calc(var(--u) * 1.05);
+}
+
+.countdown__value {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.85;
+  animation: countdown-tick 320ms ease-out;
+}
+
+.countdown--hero .countdown__value {
+  font-size: calc(var(--u) * 15);
+}
+
+.countdown--md .countdown__value {
+  font-size: calc(var(--u) * 4.2);
+}
+
+@keyframes countdown-tick {
+  0% {
+    transform: scale(1.012);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown__value {
+    animation: none;
+  }
+}

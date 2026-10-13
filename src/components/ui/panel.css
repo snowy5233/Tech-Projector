@@ -1,0 +1,55 @@
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 0.7);
+  padding: calc(var(--u) * 1.1) calc(var(--u) * 1.3);
+  border: var(--border) solid var(--white);
+  border-radius: var(--radius);
+  min-height: 0;
+  min-width: 0;
+}
+
+.panel--solid {
+  background: var(--black);
+  color: var(--white);
+}
+
+.panel--invert {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+/* Transparent so the artwork reads straight through the frame. */
+.panel--ghost {
+  background: transparent;
+  color: var(--white);
+}
+
+.panel--dashed {
+  border-style: dashed;
+}
+
+.panel__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap);
+}
+
+.panel__label {
+  white-space: nowrap;
+}
+
+.panel__meta {
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+}
+
+.panel__body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}

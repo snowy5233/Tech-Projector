@@ -1,0 +1,172 @@
+.pin {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.pin__content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.pin__content > .screen {
+  width: 100%;
+  height: 100%;
+}
+
+/* Alignment guides: only while calibrating. */
+.pin__guides {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+}
+
+.pin__content--calibrating .pin__guides {
+  opacity: 1;
+}
+
+.pin__content--calibrating {
+  outline: var(--border) dashed var(--white);
+  outline-offset: calc(var(--border) * -1);
+}
+
+.pin__guide {
+  position: absolute;
+  background: var(--white);
+}
+
+.pin__guide--v {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: var(--hairline);
+  transform: translateX(-50%);
+}
+
+.pin__guide--h {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: var(--hairline);
+  transform: translateY(-50%);
+}
+
+.pin__handles {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 180ms ease,
+    visibility 180ms ease;
+}
+
+.pin__handles--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pin-handle {
+  pointer-events: auto;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: calc(var(--u) * 4.2);
+  height: calc(var(--u) * 4.2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  touch-action: none;
+}
+
+.pin-handle:active {
+  cursor: grabbing;
+}
+
+/* Double ring in both pure values, so the grab point stays visible on black and white alike. */
+.pin-handle__ring {
+  position: relative;
+  width: calc(var(--u) * 2.2);
+  height: calc(var(--u) * 2.2);
+  border: var(--border) solid var(--white);
+  border-radius: 50%;
+  background: var(--black);
+  transition: transform 120ms ease;
+}
+
+.pin-handle__ring::before,
+.pin-handle__ring::after {
+  content: '';
+  position: absolute;
+  background: var(--white);
+}
+
+.pin-handle__ring::before {
+  left: 50%;
+  top: 12%;
+  bottom: 12%;
+  width: var(--hairline);
+  transform: translateX(-50%);
+}
+
+.pin-handle__ring::after {
+  top: 50%;
+  left: 12%;
+  right: 12%;
+  height: var(--hairline);
+  transform: translateY(-50%);
+}
+
+.pin-handle:hover .pin-handle__ring,
+.pin-handle:focus-visible .pin-handle__ring {
+  background: var(--white);
+  transform: scale(1.18);
+}
+
+.pin-handle:active .pin-handle__ring {
+  background: var(--white);
+  transform: scale(0.94);
+}
+
+.pin-handle:hover .pin-handle__ring::before,
+.pin-handle:hover .pin-handle__ring::after,
+.pin-handle:focus-visible .pin-handle__ring::before,
+.pin-handle:focus-visible .pin-handle__ring::after,
+.pin-handle:active .pin-handle__ring::before,
+.pin-handle:active .pin-handle__ring::after {
+  background: var(--black);
+}
+
+.pin-handle__caption {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, calc(var(--u) * 0.1));
+  padding: calc(var(--u) * 0.15) calc(var(--u) * 0.4);
+  border: var(--hairline) solid var(--white);
+  border-radius: calc(var(--u) * 0.25);
+  background: var(--black);
+  color: var(--white);
+  font-size: calc(var(--u) * 0.75);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+
+.pin-handle:hover .pin-handle__caption,
+.pin-handle:focus-visible .pin-handle__caption,
+.pin-handle:active .pin-handle__caption {
+  opacity: 1;
+}

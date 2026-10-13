@@ -1,0 +1,13 @@
+.screen-header {
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.screen-header__clock {
+  align-items: flex-end;
+  padding: calc(var(--u) * 0.7) calc(var(--u) * 1.1);
+  border: var(--border) solid var(--white);
+  border-radius: var(--radius);
+  background: var(--black);
+}

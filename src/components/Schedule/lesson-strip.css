@@ -1,0 +1,132 @@
+.strip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  gap: calc(var(--u) * 0.35);
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  width: min(54vw, 90%);
+  height: 100%;
+  min-height: 0;
+}
+
+.strip__item {
+  --fill: 0;
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: calc(var(--u) * 0.8);
+  min-height: calc(var(--u) * 2.6);
+  padding: 0 calc(var(--u) * 0.9);
+  border: var(--border) solid var(--white);
+  border-radius: calc(var(--u) * 0.4);
+  background: var(--black);
+  color: var(--white);
+  overflow: hidden;
+  transition:
+    flex 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    min-height 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.strip__item--done {
+  background: var(--white);
+  color: var(--black);
+}
+
+.strip__item--break {
+  border-style: dashed;
+}
+
+.strip__item--break.strip__item--active,
+.strip__item--break.strip__item--done {
+  border-style: solid;
+}
+
+.strip__item--active {
+  flex: 1 1 auto;
+  min-height: calc(var(--u) * 18);
+  padding: 0 calc(var(--u) * 1.6);
+  gap: calc(var(--u) * 1.2);
+}
+
+.strip__meter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(var(--fill) * 100%);
+  background: var(--white);
+  pointer-events: none;
+  z-index: 0;
+  transition: width 180ms linear;
+}
+
+.strip__label,
+.strip__time,
+.strip__remaining {
+  position: relative;
+  z-index: 1;
+  transition: font-size 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.strip__item--active .strip__label,
+.strip__item--active .strip__time,
+.strip__item--active .strip__remaining {
+  mix-blend-mode: difference;
+}
+
+.strip__label {
+  font-size: calc(var(--u) * 1.25);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.strip__item--active .strip__label {
+  font-size: calc(var(--u) * 5.4);
+}
+
+.strip__item--break .strip__label {
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.strip__time {
+  font-size: calc(var(--u) * 1.05);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  justify-self: start;
+}
+
+.strip__item--active .strip__time {
+  font-size: calc(var(--u) * 2.4);
+}
+
+.strip__remaining {
+  font-size: calc(var(--u) * 2.2);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  justify-self: end;
+}
+
+.strip__item--next {
+  border-style: dashed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip__item,
+  .strip__label,
+  .strip__time,
+  .strip__remaining,
+  .strip__meter {
+    transition: none;
+  }
+}

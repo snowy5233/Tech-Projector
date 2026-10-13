@@ -1,0 +1,16 @@
+.screen-footer {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 1);
+  padding: calc(var(--u) * 0.55) calc(var(--u) * 1);
+  border: var(--border) solid var(--white);
+  border-radius: var(--radius);
+  background: var(--black);
+  flex-shrink: 0;
+}
+
+.screen-footer__edge {
+  font-size: calc(var(--u) * 1.15);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}

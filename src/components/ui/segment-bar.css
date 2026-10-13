@@ -1,0 +1,22 @@
+.segbar {
+  --segbar-ink: var(--white);
+
+  display: flex;
+  gap: calc(var(--u) * 0.22);
+  width: 100%;
+  height: calc(var(--u) * 0.85);
+}
+
+.segbar--invert {
+  --segbar-ink: var(--black);
+}
+
+.segbar__cell {
+  flex: 1;
+  border: var(--hairline) solid var(--segbar-ink);
+  border-radius: calc(var(--u) * 0.1);
+}
+
+.segbar__cell--on {
+  background: var(--segbar-ink);
+}

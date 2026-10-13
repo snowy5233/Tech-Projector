@@ -1,0 +1,80 @@
+.btn {
+  --btn-fg: var(--white);
+  --btn-bg: var(--black);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 0.4);
+  padding: calc(var(--u) * 0.55) calc(var(--u) * 1.1);
+  border: var(--border) solid var(--white);
+  border-radius: calc(var(--u) * 0.45);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: 700;
+  font-size: calc(var(--u) * 1.05);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    transform 90ms ease;
+  touch-action: manipulation;
+}
+
+.btn--sm {
+  padding: calc(var(--u) * 0.35) calc(var(--u) * 0.8);
+  font-size: calc(var(--u) * 0.9);
+}
+
+.btn--solid {
+  --btn-fg: var(--black);
+  --btn-bg: var(--white);
+}
+
+.btn:hover:not(:disabled),
+.btn:focus-visible:not(:disabled) {
+  --btn-fg: var(--black);
+  --btn-bg: var(--white);
+}
+
+.btn--solid:hover:not(:disabled),
+.btn--solid:focus-visible:not(:disabled) {
+  --btn-fg: var(--white);
+  --btn-bg: var(--black);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(calc(var(--u) * 0.08)) scale(0.98);
+}
+
+.btn:disabled {
+  border-style: dashed;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  transform: none;
+}
+
+@media (hover: none) {
+  /* Touch: only the pressed state should flip, hover would stick. */
+  .btn:hover:not(:disabled) {
+    --btn-fg: var(--white);
+    --btn-bg: var(--black);
+  }
+
+  .btn--solid:hover:not(:disabled) {
+    --btn-fg: var(--black);
+    --btn-bg: var(--white);
+  }
+
+  .btn:active:not(:disabled) {
+    --btn-fg: var(--black);
+    --btn-bg: var(--white);
+  }
+
+  .btn--solid:active:not(:disabled) {
+    --btn-fg: var(--white);
+    --btn-bg: var(--black);
+  }
+}
