@@ -6,11 +6,13 @@ import {
   formatEventCountdownNl,
   isCountdownPassed,
 } from '../../lib/time';
-import { ARTWORK_MODE_COUNT, forcedArtworkModeIndex } from '../Artwork/createArtworkModes';
+import { ARTWORK_MODE_COUNT } from '../Artwork/createArtworkModes';
+import type { DebugConfig } from '../../hooks/useDebugConfig';
 import type { ScheduleState } from '../../hooks/useScheduleState';
 import { useRandomModeIndex } from '../../hooks/useRandomModeIndex';
 import { ArtworkCanvas } from '../Artwork/ArtworkCanvas';
 import { Clock } from '../Clock/Clock';
+import { DebugPanel } from '../Debug/DebugPanel';
 import { Slide, slotIndexOf } from '../Slide/Slide';
 import { CalibrateBar } from './CalibrateBar';
 import './screen.css';
@@ -41,6 +43,10 @@ export interface ScreenProps {
   canResetPin: boolean;
   isFullscreen: boolean;
   onResetPin: () => void;
+  /** Locked artwork slot (?art or the debug panel); null = the schedule decides. */
+  forcedModeIndex: number | null;
+  /** Debug controls; shown while the mouse moves. */
+  debug: DebugConfig | null;
 }
 
 export const Screen = ({
@@ -50,11 +56,13 @@ export const Screen = ({
   canResetPin,
   isFullscreen,
   onResetPin,
+  forcedModeIndex,
+  debug,
 }: ScreenProps) => {
   const slot = state.currentSlot;
   const afterHours = state.phase === 'after';
   const randomMode = useRandomModeIndex(afterHours, ARTWORK_MODE_COUNT);
-  const modeIndex = forcedArtworkModeIndex() ?? (slot ? slotIndexOf(slot) : afterHours ? randomMode : 0);
+  const modeIndex = forcedModeIndex ?? (slot ? slotIndexOf(slot) : afterHours ? randomMode : 0);
   const title = slot ? slot.label : IDLE_TITLE[state.phase];
   const range = slot
     ? `${formatSlotTime(slot.start)}–${formatSlotTime(slot.end)}`
@@ -91,6 +99,15 @@ export const Screen = ({
           </>
         )}
       </div>
+
+      {debug && (
+        <DebugPanel
+          config={debug}
+          now={now}
+          phase={state.phase}
+          visible={pointerActive}
+        />
+      )}
 
       <CalibrateBar
         visible={pointerActive}
