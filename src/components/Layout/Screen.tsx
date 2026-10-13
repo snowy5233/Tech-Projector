@@ -9,11 +9,13 @@ import {
 import { ARTWORK_MODE_COUNT } from '../Artwork/createArtworkModes';
 import type { DebugConfig } from '../../hooks/useDebugConfig';
 import type { ScheduleState } from '../../hooks/useScheduleState';
+import type { Season } from '../Seasonal/SeasonalOverlay';
 import { useRandomModeIndex } from '../../hooks/useRandomModeIndex';
 import { ArtworkCanvas } from '../Artwork/ArtworkCanvas';
 import { Clock } from '../Clock/Clock';
 import { DebugPanel } from '../Debug/DebugPanel';
 import { Slide, slotIndexOf } from '../Slide/Slide';
+import { SeasonalOverlay, seasonOf } from '../Seasonal/SeasonalOverlay';
 import { CalibrateBar } from './CalibrateBar';
 import './screen.css';
 
@@ -45,6 +47,8 @@ export interface ScreenProps {
   onResetPin: () => void;
   /** Locked artwork slot (?art or the debug panel); null = the schedule decides. */
   forcedModeIndex: number | null;
+  /** Locked season effect (?seizoen or the debug panel); null = the clock month decides. */
+  forcedSeason: Season | null;
   /** Debug controls; shown while the mouse moves. */
   debug: DebugConfig | null;
 }
@@ -57,6 +61,7 @@ export const Screen = ({
   isFullscreen,
   onResetPin,
   forcedModeIndex,
+  forcedSeason,
   debug,
 }: ScreenProps) => {
   const slot = state.currentSlot;
@@ -84,6 +89,8 @@ export const Screen = ({
         energy={ENERGY[state.phase]}
         density={density}
       />
+
+      <SeasonalOverlay season={forcedSeason ?? seasonOf(now)} />
 
       <div className="screen__ui">
         <Clock now={now} showDate={false} className="clock--corner" />

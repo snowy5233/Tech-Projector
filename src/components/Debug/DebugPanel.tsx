@@ -2,6 +2,7 @@ import type { DebugConfig } from '../../hooks/useDebugConfig';
 import type { ScheduleState } from '../../hooks/useScheduleState';
 import { ARTWORK_MODE_IDS } from '../Artwork/createArtworkModes';
 import { Button } from '../ui/Button';
+import { SEASONS, seasonOf, type Season } from '../Seasonal/SeasonalOverlay';
 import './debug.css';
 
 const DAYS = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
@@ -92,6 +93,25 @@ export const DebugPanel = ({ config, now, phase, visible }: DebugPanelProps) => 
         >
           <option value="auto">auto (rooster)</option>
           {ARTWORK_MODE_IDS.map((id) => (
+            <option key={id} value={id}>
+              {id}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="debug__row">
+        <span className="u-eyebrow">seizoen</span>
+        <select
+          className="debug__input"
+          value={config.forcedSeason ?? 'auto'}
+          onChange={(event) =>
+            config.setForcedSeason(
+              event.target.value === 'auto' ? null : (event.target.value as Season),
+            )
+          }
+        >
+          <option value="auto">auto ({seasonOf(now)})</option>
+          {SEASONS.map((id) => (
             <option key={id} value={id}>
               {id}
             </option>

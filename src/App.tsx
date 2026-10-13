@@ -38,6 +38,7 @@ const App = () => {
           isFullscreen={isFullscreen}
           onResetPin={pin.reset}
           forcedModeIndex={debug.forcedModeIndex}
+          forcedSeason={debug.forcedSeason}
           debug={debug}
         />
       </CornerPinStage>
