@@ -31,7 +31,7 @@ const MAX_PIXEL_RATIO = 1.5;
 const spawn = (width: number, height: number, season: Season): Particle => ({
   x: Math.random() * width,
   y: season === 'zomer' ? height + Math.random() * height : -Math.random() * height,
-  size: 2 + Math.random() * 4,
+  size: 7 + Math.random() * 9,
   speed: season === 'zomer' ? -(6 + Math.random() * 10) : 12 + Math.random() * 26,
   sway: Math.random() * Math.PI * 2,
   swaySpeed: 0.4 + Math.random() * 0.8,
@@ -74,7 +74,7 @@ export const SeasonalOverlay = ({ season }: SeasonalOverlayProps) => {
     let currentSeason = seasonRef.current;
 
     const targetCount = () =>
-      Math.max(14, Math.min(90, Math.round((width * height) / 26000)));
+      Math.max(10, Math.min(48, Math.round((width * height) / 42000)));
 
     const repopulate = () => {
       particles = Array.from({ length: targetCount() }, () =>
@@ -102,26 +102,112 @@ export const SeasonalOverlay = ({ season }: SeasonalOverlayProps) => {
       ctx.translate(p.x, p.y);
       if (currentSeason === 'herfst') {
         ctx.rotate(p.spin);
+        const w = p.size;
+        const h = p.size * 1.25;
         ctx.beginPath();
-        ctx.moveTo(0, -p.size);
-        ctx.quadraticCurveTo(p.size, 0, 0, p.size);
-        ctx.quadraticCurveTo(-p.size, 0, 0, -p.size);
+        ctx.moveTo(0, -h);
+        ctx.quadraticCurveTo(w, -h * 0.45, 0, h);
+        ctx.quadraticCurveTo(-w, -h * 0.45, 0, -h);
         ctx.fill();
-      } else if (currentSeason === 'winter') {
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = Math.max(0.5, p.size * 0.07);
         ctx.beginPath();
-        ctx.arc(0, 0, p.size * 0.42, 0, Math.PI * 2);
+        ctx.moveTo(0, -h * 0.92);
+        ctx.lineTo(0, h * 0.9);
+        ctx.moveTo(0, -h * 0.25);
+        ctx.lineTo(w * 0.55, -h * 0.05);
+        ctx.moveTo(0, -h * 0.25);
+        ctx.lineTo(-w * 0.55, -h * 0.05);
+        ctx.moveTo(0, h * 0.2);
+        ctx.lineTo(w * 0.45, h * 0.4);
+        ctx.moveTo(0, h * 0.2);
+        ctx.lineTo(-w * 0.45, h * 0.4);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, h);
+        ctx.quadraticCurveTo(w * 0.22, h * 1.18, w * 0.38, h * 1.1);
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = Math.max(0.6, p.size * 0.1);
+        ctx.stroke();
+      } else if (currentSeason === 'winter') {
+        ctx.rotate(p.spin);
+        const r = p.size * 0.75;
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = Math.max(0.7, p.size * 0.1);
+        ctx.lineCap = 'round';
+        for (let a = 0; a < 6; a += 1) {
+          const angle = (a / 6) * Math.PI * 2;
+          const dx = Math.cos(angle);
+          const dy = Math.sin(angle);
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.lineTo(dx * r, dy * r);
+          ctx.stroke();
+          for (const t of [0.45, 0.72]) {
+            const bx = dx * r * t;
+            const by = dy * r * t;
+            for (const dir of [1, -1]) {
+              const branch = r * 0.3;
+              const perp = angle + (dir * Math.PI) / 3;
+              ctx.beginPath();
+              ctx.moveTo(bx, by);
+              ctx.lineTo(bx + Math.cos(perp) * branch, by + Math.sin(perp) * branch);
+              ctx.stroke();
+            }
+          }
+          ctx.beginPath();
+          ctx.arc(dx * r, dy * r, Math.max(0.6, p.size * 0.08), 0, Math.PI * 2);
+          ctx.fillStyle = '#fff';
+          ctx.fill();
+        }
+        ctx.beginPath();
+        ctx.arc(0, 0, Math.max(0.8, p.size * 0.12), 0, Math.PI * 2);
         ctx.fill();
       } else if (currentSeason === 'lente') {
         ctx.rotate(p.spin);
+        const w = p.size * 0.9;
+        const h = p.size * 0.55;
         ctx.beginPath();
-        ctx.ellipse(0, 0, p.size, p.size * 0.45, 0, 0, Math.PI * 2);
+        ctx.moveTo(-w, 0);
+        ctx.quadraticCurveTo(0, -h * 1.6, w, 0);
+        ctx.quadraticCurveTo(0, h * 0.9, -w, 0);
         ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(-w, 0);
+        ctx.quadraticCurveTo(0, h * 1.6, w, 0);
+        ctx.quadraticCurveTo(0, -h * 0.9, -w, 0);
+        ctx.fill();
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = Math.max(0.4, p.size * 0.05);
+        ctx.beginPath();
+        ctx.moveTo(-w * 0.85, 0);
+        ctx.lineTo(w * 0.85, 0);
+        ctx.stroke();
       } else {
         const flicker = 0.55 + 0.45 * Math.sin(time * 2.2 + p.sway);
+        ctx.globalAlpha = p.alpha * flicker * 0.28;
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size * 1.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = p.alpha * flicker * 0.5;
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size * 0.8, 0, Math.PI * 2);
+        ctx.fill();
         ctx.globalAlpha = p.alpha * flicker;
         ctx.beginPath();
-        ctx.arc(0, 0, p.size * 0.36, 0, Math.PI * 2);
+        ctx.arc(0, 0, p.size * 0.38, 0, Math.PI * 2);
         ctx.fill();
+        ctx.globalAlpha = p.alpha * flicker * 0.8;
+        for (let ray = 0; ray < 4; ray += 1) {
+          const angle = p.sway + (ray / 4) * Math.PI * 2;
+          const len = p.size * 1.1 * (0.7 + 0.3 * Math.sin(time * 3 + ray));
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(angle) * p.size * 0.3, Math.sin(angle) * p.size * 0.3);
+          ctx.lineTo(Math.cos(angle) * len, Math.sin(angle) * len);
+          ctx.strokeStyle = '#fff';
+          ctx.lineWidth = Math.max(0.5, p.size * 0.09);
+          ctx.stroke();
+        }
       }
       ctx.restore();
     };
