@@ -161,7 +161,6 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
           <Button
             size="sm"
             onClick={() => config.setCustomTitleOn(!config.customTitleOn)}
-            disabled={!config.customTitle}
           >
             {config.customTitleOn ? 'aan' : 'uit'}
           </Button>
@@ -180,7 +179,6 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
           <Button
             size="sm"
             onClick={() => config.setCustomRangeOn(!config.customRangeOn)}
-            disabled={!config.customRange}
           >
             {config.customRangeOn ? 'aan' : 'uit'}
           </Button>
