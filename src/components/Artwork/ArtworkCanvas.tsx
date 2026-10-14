@@ -27,6 +27,7 @@ export const ArtworkCanvas = ({ modeIndex, energy = 0.3, density = 0.2, speed = 
   const mixRef = useRef(1);
   energyRef.current = energy;
   densityRef.current = density;
+  speedRef.current = speed;
 
   if (modeIndex !== modeRef.current) {
     fromRef.current = modeRef.current;
