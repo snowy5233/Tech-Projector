@@ -12,7 +12,7 @@ export interface SlideProps {
 export const Slide = ({ title, range, nextSlot, brand = false }: SlideProps) => (
   <div className={['slide', brand ? 'slide--brand' : ''].filter(Boolean).join(' ')}>
     <div className="slide__hero">
-      <h1 className="slide__title">{title}</h1>
+      {title && <h1 className="slide__title">{title}</h1>}
       {range && <p className="slide__range u-mono">{range}</p>}
     </div>
 
