@@ -48,6 +48,7 @@ const App = () => {
           customTitleOn={debug.customTitleOn}
           customRange={debug.customRange}
           customRangeOn={debug.customRangeOn}
+          speed={debug.speed}
           debug={debug}
         />
       </CornerPinStage>

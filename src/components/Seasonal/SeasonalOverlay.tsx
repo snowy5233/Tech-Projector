@@ -75,6 +75,8 @@ export interface SeasonalOverlayProps {
   season: Season | null;
   weather?: Weather;
   holiday?: HolidayId | null;
+  /** Animation speed multiplier. */
+  speed?: number;
 }
 
 /**
@@ -450,9 +452,10 @@ const drawParticle = (
  * Seizoens- en feestdag-effecten bovenop het artwork, onder de interface.
  * Seizoen uit de klok, weer (regen/sneeuw) uit useWeather, feestdag uit de datum.
  */
-export const SeasonalOverlay = ({ season, weather = null, holiday = null }: SeasonalOverlayProps) => {
+export const SeasonalOverlay = ({ season, weather = null, holiday = null, speed = 1 }: SeasonalOverlayProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const effectsRef = useRef<string>('');
+  const speedRef = useRef(speed);
   const kindsOf = () => {
     const kinds: ParticleKind[] = [];
     if (season) kinds.push(season);
@@ -461,6 +464,7 @@ export const SeasonalOverlay = ({ season, weather = null, holiday = null }: Seas
     return kinds;
   };
   const signature = kindsOf().join('+');
+  speedRef.current = speed;
   if (effectsRef.current !== signature) {
     effectsRef.current = signature;
   }
@@ -472,7 +476,7 @@ export const SeasonalOverlay = ({ season, weather = null, holiday = null }: Seas
     if (!ctx) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const timeScale = reducedMotion ? 0.35 : 1;
+    const timeScale = () => (reducedMotion ? 0.35 : 1) * speedRef.current;
 
     let width = 0;
     let height = 0;
@@ -530,7 +534,7 @@ export const SeasonalOverlay = ({ season, weather = null, holiday = null }: Seas
       frameId = requestAnimationFrame(render);
       resize();
       if (previous === 0) previous = now;
-      const dt = Math.min((now - previous) / 1000, 0.1) * timeScale;
+      const dt = Math.min((now - previous) / 1000, 0.1) * timeScale();
       previous = now;
       const time = now / 1000;
 

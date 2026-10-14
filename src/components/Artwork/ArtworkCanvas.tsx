@@ -13,12 +13,15 @@ export interface ArtworkCanvasProps {
   energy?: number;
   /** 0..1 — how built-up the drawing is (start of block = black, end = airy white). */
   density?: number;
+  /** Animation speed multiplier. */
+  speed?: number;
 }
 
-export const ArtworkCanvas = ({ modeIndex, energy = 0.3, density = 0.2 }: ArtworkCanvasProps) => {
+export const ArtworkCanvas = ({ modeIndex, energy = 0.3, density = 0.2, speed = 1 }: ArtworkCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const energyRef = useRef(energy);
   const densityRef = useRef(density);
+  const speedRef = useRef(speed);
   const modeRef = useRef(modeIndex);
   const fromRef = useRef(modeIndex);
   const mixRef = useRef(1);
@@ -63,7 +66,7 @@ export const ArtworkCanvas = ({ modeIndex, energy = 0.3, density = 0.2 }: Artwor
     };
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const timeScale = reducedMotion ? 0.35 : 1;
+    const timeScale = () => (reducedMotion ? 0.35 : 1) * speedRef.current;
 
     const wrap = (index: number) => {
       const len = modes.length;
@@ -76,7 +79,7 @@ export const ArtworkCanvas = ({ modeIndex, energy = 0.3, density = 0.2 }: Artwor
 
       if (previous === 0) previous = now;
 
-      const rawDt = Math.min((now - previous) / 1000, 0.1) * timeScale;
+      const rawDt = Math.min((now - previous) / 1000, 0.1) * timeScale();
       previous = now;
 
       smoothEnergy += (energyRef.current - smoothEnergy) * Math.min(1, rawDt * 1.5);

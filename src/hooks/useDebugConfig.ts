@@ -32,7 +32,19 @@ export interface DebugConfig {
   /** Whether the custom time range override is applied. */
   customRangeOn: boolean;
   setCustomRangeOn: (on: boolean) => void;
+  /** Animation speed multiplier for artwork and particles. Seeded from `?snelheid=`. */
+  speed: number;
+  setSpeed: (speed: number) => void;
 }
+
+export const SPEEDS = [0.5, 1, 1.5, 2, 3];
+
+/** Optional `?snelheid=<0.5|1|1.5|2|3>` to scale animation speed. */
+const speedFromUrl = (): number => {
+  const value = new URLSearchParams(window.location.search).get('snelheid');
+  const parsed = value === null ? NaN : Number(value);
+  return SPEEDS.includes(parsed) ? parsed : 1;
+};
 
 /** Optional `?seizoen=<id|uit>` to force one seasonal effect. Unknown values are ignored. */
 const forcedSeasonFromUrl = (): Season | 'auto' | 'uit' => {
@@ -76,6 +88,7 @@ export const useDebugConfig = (): DebugConfig => {
   );
   const [customTitleOn, setCustomTitleOn] = useState(true);
   const [customRangeOn, setCustomRangeOn] = useState(true);
+  const [speed, setSpeed] = useState<number>(speedFromUrl);
   return {
     clockOffsetMs,
     setClockOffsetMs,
@@ -95,5 +108,7 @@ export const useDebugConfig = (): DebugConfig => {
     setCustomTitleOn,
     customRangeOn,
     setCustomRangeOn,
+    speed,
+    setSpeed,
   };
 };

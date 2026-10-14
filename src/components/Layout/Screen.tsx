@@ -64,6 +64,8 @@ export interface ScreenProps {
   customRange: string;
   /** Whether the custom time range override is applied. */
   customRangeOn: boolean;
+  /** Animation speed multiplier for artwork and particles. */
+  speed: number;
   /** Debug controls; shown while the mouse moves. */
   debug: DebugConfig | null;
 }
@@ -84,6 +86,7 @@ export const Screen = ({
   customTitleOn,
   customRange,
   customRangeOn,
+  speed,
   debug,
 }: ScreenProps) => {
   const slot = state.currentSlot;
@@ -115,6 +118,7 @@ export const Screen = ({
           modeIndex={modeIndex}
           energy={ENERGY[state.phase]}
           density={density}
+          speed={speed}
         />
       )}
 
@@ -122,6 +126,7 @@ export const Screen = ({
         season={forcedSeason === 'auto' ? seasonOf(now) : forcedSeason === 'uit' ? null : forcedSeason}
         weather={forcedWeather === 'auto' ? weatherLive : forcedWeather === 'uit' ? null : forcedWeather}
         holiday={forcedHoliday === 'auto' ? holidayOf(now) : forcedHoliday === 'uit' ? null : forcedHoliday}
+        speed={speed}
       />
 
       <div className="screen__ui">
