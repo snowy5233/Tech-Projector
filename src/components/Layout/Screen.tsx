@@ -1,7 +1,6 @@
 import { formatSlotTime } from '../../data/schedule';
 import type { CSSProperties } from 'react';
 import {
-  COUNTDOWN_LABEL,
   eventCountdownGlitchLevel,
   formatEventCountdownNl,
   isCountdownPassed,
@@ -105,7 +104,7 @@ export const Screen = ({
       ? 0.4
       : 0.12;
 
-  const countdownText = formatEventCountdownNl(now);
+  const countdownText = `nog ${formatEventCountdownNl(now)} tot de vakantie!`;
   const glitchStyle = { '--glitch': eventCountdownGlitchLevel(now) } as CSSProperties;
   const showCountdown = !isCountdownPassed(now);
 
@@ -135,13 +134,9 @@ export const Screen = ({
         />
 
         {showCountdown && (
-          <>
-            <p className="screen__countdown u-mono" data-text={countdownText} style={glitchStyle}>
-              {countdownText}
-            </p>
-
-            <p className="screen__countdown-label">{COUNTDOWN_LABEL}</p>
-          </>
+          <p className="screen__countdown u-mono" data-text={countdownText} style={glitchStyle}>
+            {countdownText}
+          </p>
         )}
       </div>
 
