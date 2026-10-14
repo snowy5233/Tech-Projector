@@ -150,23 +150,41 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
       </label>
       <label className="debug__row">
         <span className="u-eyebrow">tekst</span>
-        <input
-          className="debug__input"
-          type="text"
-          value={config.customTitle}
-          placeholder="auto (rooster)"
-          onChange={(event) => config.setCustomTitle(event.target.value)}
-        />
+        <span className="debug__controls">
+          <input
+            className="debug__input"
+            type="text"
+            value={config.customTitle}
+            placeholder="auto (rooster)"
+            onChange={(event) => config.setCustomTitle(event.target.value)}
+          />
+          <Button
+            size="sm"
+            onClick={() => config.setCustomTitleOn(!config.customTitleOn)}
+            disabled={!config.customTitle}
+          >
+            {config.customTitleOn ? 'aan' : 'uit'}
+          </Button>
+        </span>
       </label>
       <label className="debug__row">
         <span className="u-eyebrow">tijd</span>
-        <input
-          className="debug__input"
-          type="text"
-          value={config.customRange}
-          placeholder="auto (rooster)"
-          onChange={(event) => config.setCustomRange(event.target.value)}
-        />
+        <span className="debug__controls">
+          <input
+            className="debug__input"
+            type="text"
+            value={config.customRange}
+            placeholder="auto (rooster)"
+            onChange={(event) => config.setCustomRange(event.target.value)}
+          />
+          <Button
+            size="sm"
+            onClick={() => config.setCustomRangeOn(!config.customRangeOn)}
+            disabled={!config.customRange}
+          >
+            {config.customRangeOn ? 'aan' : 'uit'}
+          </Button>
+        </span>
       </label>
     </div>
   );

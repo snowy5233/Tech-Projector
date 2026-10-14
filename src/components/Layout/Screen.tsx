@@ -59,8 +59,12 @@ export interface ScreenProps {
   forcedHoliday: HolidayId | 'auto' | 'uit';
   /** Custom slide title override; '' = the schedule decides. */
   customTitle: string;
+  /** Whether the custom title override is applied. */
+  customTitleOn: boolean;
   /** Custom slide time range override; '' = the schedule decides. */
   customRange: string;
+  /** Whether the custom time range override is applied. */
+  customRangeOn: boolean;
   /** Debug controls; shown while the mouse moves. */
   debug: DebugConfig | null;
 }
@@ -78,7 +82,9 @@ export const Screen = ({
   weatherLive,
   forcedHoliday,
   customTitle,
+  customTitleOn,
   customRange,
+  customRangeOn,
   debug,
 }: ScreenProps) => {
   const slot = state.currentSlot;
@@ -87,7 +93,7 @@ export const Screen = ({
   const forcedIndex = ARTWORK_MODE_IDS_INDEX[forcedMode] ?? null;
   const artworkOff = forcedMode === 'uit';
   const modeIndex = forcedIndex ?? (slot ? slotIndexOf(slot) : afterHours ? randomMode : 0);
-  const title = customTitle || (slot ? slot.label : IDLE_TITLE[state.phase]);
+  const title = (customTitleOn && customTitle) || (slot ? slot.label : IDLE_TITLE[state.phase]);
   const range = slot
     ? `${formatSlotTime(slot.start)}–${formatSlotTime(slot.end)}`
     : undefined;
@@ -119,7 +125,12 @@ export const Screen = ({
 
       <div className="screen__ui">
         <Clock now={now} showDate={false} className="clock--corner" />
-        <Slide title={title} range={customRange || range} nextSlot={state.nextSlot} brand={afterHours} />
+        <Slide
+          title={title}
+          range={(customRangeOn && customRange) || range}
+          nextSlot={state.nextSlot}
+          brand={afterHours}
+        />
 
         {showCountdown && (
           <>

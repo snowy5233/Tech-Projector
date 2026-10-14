@@ -23,9 +23,15 @@ export interface DebugConfig {
   /** Custom slide title override; '' = the schedule decides. Seeded from `?titel=`. */
   customTitle: string;
   setCustomTitle: (title: string) => void;
-  /** Custom slide time range override; '' = schedule decides. Seeded from `?tijd=`. */
+  /** Custom slide time range override; '' = the schedule decides. Seeded from `?tijd=`. */
   customRange: string;
   setCustomRange: (range: string) => void;
+  /** Whether the custom title override is applied. */
+  customTitleOn: boolean;
+  setCustomTitleOn: (on: boolean) => void;
+  /** Whether the custom time range override is applied. */
+  customRangeOn: boolean;
+  setCustomRangeOn: (on: boolean) => void;
 }
 
 /** Optional `?seizoen=<id|uit>` to force one seasonal effect. Unknown values are ignored. */
@@ -68,6 +74,8 @@ export const useDebugConfig = (): DebugConfig => {
   const [customRange, setCustomRange] = useState<string>(
     () => new URLSearchParams(window.location.search).get('tijd') ?? '',
   );
+  const [customTitleOn, setCustomTitleOn] = useState(true);
+  const [customRangeOn, setCustomRangeOn] = useState(true);
   return {
     clockOffsetMs,
     setClockOffsetMs,
@@ -83,5 +91,9 @@ export const useDebugConfig = (): DebugConfig => {
     setCustomTitle,
     customRange,
     setCustomRange,
+    customTitleOn,
+    setCustomTitleOn,
+    customRangeOn,
+    setCustomRangeOn,
   };
 };
