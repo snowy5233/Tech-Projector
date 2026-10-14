@@ -11,21 +11,22 @@ export interface DebugConfig {
   /** Locked artwork slot: 'auto' = schedule decides, 'uit' = artwork off, or a mode id. Seeded from `?art`. */
   forcedMode: string;
   setForcedMode: (mode: string) => void;
-  /** Locked season effect; null = derived from the clock month. Seeded from `?seizoen`. */
-  forcedSeason: Season | null;
-  setForcedSeason: (season: Season | null) => void;
+  /** Locked season effect: 'auto' = clock month, 'uit' = off, or a season id. Seeded from `?seizoen`. */
+  forcedSeason: Season | 'auto' | 'uit';
+  setForcedSeason: (season: Season | 'auto' | 'uit') => void;
   /** Locked weather effect; null = live weather (or none). Seeded from `?weer`. */
   forcedWeather: Weather | 'auto' | 'uit';
   setForcedWeather: (weather: Weather | 'auto' | 'uit') => void;
-  /** Locked holiday effect; null = derived from the clock date. Seeded from `?feest`. */
-  forcedHoliday: HolidayId | null;
-  setForcedHoliday: (holiday: HolidayId | null) => void;
+  /** Locked holiday effect: 'auto' = clock date, 'uit' = off, or a holiday id. Seeded from `?feest`. */
+  forcedHoliday: HolidayId | 'auto' | 'uit';
+  setForcedHoliday: (holiday: HolidayId | 'auto' | 'uit') => void;
 }
 
-/** Optional `?seizoen=<id>` to force one seasonal effect. Unknown values are ignored. */
-const forcedSeasonFromUrl = (): Season | null => {
+/** Optional `?seizoen=<id|uit>` to force one seasonal effect. Unknown values are ignored. */
+const forcedSeasonFromUrl = (): Season | 'auto' | 'uit' => {
   const value = new URLSearchParams(window.location.search).get('seizoen');
-  return value && SEASONS.includes(value as Season) ? (value as Season) : null;
+  if (value === 'uit') return 'uit';
+  return value && SEASONS.includes(value as Season) ? (value as Season) : 'auto';
 };
 
 /** Optional `?weer=<regen|sneeuw|uit>` to force the weather effect. */
@@ -36,10 +37,11 @@ const forcedWeatherFromUrl = (): Weather | 'auto' | 'uit' => {
   return 'auto';
 };
 
-/** Optional `?feest=<id>` to force one holiday effect. */
-const forcedHolidayFromUrl = (): HolidayId | null => {
+/** Optional `?feest=<id|uit>` to force one holiday effect. */
+const forcedHolidayFromUrl = (): HolidayId | 'auto' | 'uit' => {
   const value = new URLSearchParams(window.location.search).get('feest');
-  return value && HOLIDAY_IDS.includes(value as HolidayId) ? (value as HolidayId) : null;
+  if (value === 'uit') return 'uit';
+  return value && HOLIDAY_IDS.includes(value as HolidayId) ? (value as HolidayId) : 'auto';
 };
 
 /** Runtime overrides for the debug panel, seeded from the URL preview params. */
@@ -51,9 +53,9 @@ export const useDebugConfig = (): DebugConfig => {
     const index = forcedArtworkModeIndex();
     return index === null ? 'auto' : ARTWORK_MODE_IDS[index] ?? 'auto';
   });
-  const [forcedSeason, setForcedSeason] = useState<Season | null>(forcedSeasonFromUrl);
+  const [forcedSeason, setForcedSeason] = useState<Season | 'auto' | 'uit'>(forcedSeasonFromUrl);
   const [forcedWeather, setForcedWeather] = useState<Weather | 'auto' | 'uit'>(forcedWeatherFromUrl);
-  const [forcedHoliday, setForcedHoliday] = useState<HolidayId | null>(forcedHolidayFromUrl);
+  const [forcedHoliday, setForcedHoliday] = useState<HolidayId | 'auto' | 'uit'>(forcedHolidayFromUrl);
   return {
     clockOffsetMs,
     setClockOffsetMs,

@@ -71,10 +71,18 @@ const spawn = (width: number, height: number, kind: ParticleKind): Particle => (
 });
 
 export interface SeasonalOverlayProps {
-  season: Season;
+  /** Season effect to show; null = no seasonal particles. */
+  season: Season | null;
   weather?: Weather;
   holiday?: HolidayId | null;
 }
+
+/**
+ * Total particle budget across all active effects — with season + weather +
+ * holiday combined, each effect gets a proportional share so the screen
+ * never gets crowded.
+ */
+const TOTAL_BUDGET = 96;
 
 const drawLeaf = (ctx: CanvasRenderingContext2D, p: Particle) => {
   ctx.rotate(p.spin);
@@ -446,7 +454,8 @@ export const SeasonalOverlay = ({ season, weather = null, holiday = null }: Seas
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const effectsRef = useRef<string>('');
   const kindsOf = () => {
-    const kinds: ParticleKind[] = [season];
+    const kinds: ParticleKind[] = [];
+    if (season) kinds.push(season);
     if (weather) kinds.push(weather);
     if (holiday) kinds.push(holiday);
     return kinds;
@@ -478,11 +487,28 @@ export const SeasonalOverlay = ({ season, weather = null, holiday = null }: Seas
     const countFor = (kind: ParticleKind) =>
       Math.max(6, Math.round(KIND_COUNTS[kind as string] ?? 16) * scaleUnit());
 
+    /**
+     * Balance: each active effect keeps its own character (rain needs many
+     * streaks, holiday items are few and large) but the total stays within
+     * TOTAL_BUDGET, scaling every effect down evenly when they stack.
+     */
+    const balancedCounts = (kinds: ParticleKind[]): Map<ParticleKind, number> => {
+      const caps = kinds.map((kind) => countFor(kind));
+      const total = caps.reduce((sum, cap) => sum + cap, 0);
+      const scale = total > TOTAL_BUDGET ? TOTAL_BUDGET / total : 1;
+      const counts = new Map<ParticleKind, number>();
+      kinds.forEach((kind, index) => {
+        counts.set(kind, Math.max(4, Math.round(caps[index] * scale)));
+      });
+      return counts;
+    };
+
     const repopulate = () => {
       particles = [];
-      for (const kind of activeSignature.split('+')) {
-        for (let i = 0; i < countFor(kind as ParticleKind); i += 1) {
-          particles.push(spawn(width, height, kind as ParticleKind));
+      const kinds = activeSignature.split('+').filter(Boolean) as ParticleKind[];
+      for (const [kind, count] of balancedCounts(kinds)) {
+        for (let i = 0; i < count; i += 1) {
+          particles.push(spawn(width, height, kind));
         }
       }
     };

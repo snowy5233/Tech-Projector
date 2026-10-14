@@ -101,14 +101,13 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
         <span className="u-eyebrow">seizoen</span>
         <select
           className="debug__input"
-          value={config.forcedSeason ?? 'auto'}
+          value={config.forcedSeason}
           onChange={(event) =>
-            config.setForcedSeason(
-              event.target.value === 'auto' ? null : (event.target.value as Season),
-            )
+            config.setForcedSeason(event.target.value as Season | 'auto' | 'uit')
           }
         >
           <option value="auto">auto ({seasonOf(now)})</option>
+          <option value="uit">uit</option>
           {SEASONS.map((id) => (
             <option key={id} value={id}>
               {id}
@@ -135,14 +134,13 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
         <span className="u-eyebrow">feest</span>
         <select
           className="debug__input"
-          value={config.forcedHoliday ?? 'auto'}
+          value={config.forcedHoliday}
           onChange={(event) =>
-            config.setForcedHoliday(
-              event.target.value === 'auto' ? null : (event.target.value as HolidayId),
-            )
+            config.setForcedHoliday(event.target.value as HolidayId | 'auto' | 'uit')
           }
         >
           <option value="auto">auto ({holidayOf(now) ?? 'geen'})</option>
+          <option value="uit">uit</option>
           {HOLIDAY_IDS.map((id) => (
             <option key={id} value={id}>
               {id}

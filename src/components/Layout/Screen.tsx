@@ -49,14 +49,14 @@ export interface ScreenProps {
   onResetPin: () => void;
   /** Locked artwork theme: 'auto' = schedule decides, 'uit' = off, or a mode id. */
   forcedMode: string;
-  /** Locked season effect (?seizoen or the debug panel); null = the clock month decides. */
-  forcedSeason: Season | null;
+  /** Locked season effect: 'auto' = clock month, 'uit' = off, or a season id. */
+  forcedSeason: Season | 'auto' | 'uit';
   /** Locked weather effect; 'auto' = live weather via useWeather. */
   forcedWeather: Weather | 'auto' | 'uit';
   /** Live weather from useWeather, shown in the debug panel and used when 'auto'. */
   weatherLive: Weather;
-  /** Locked holiday effect (?feest or the debug panel); null = the clock date decides. */
-  forcedHoliday: HolidayId | null;
+  /** Locked holiday effect: 'auto' = clock date, 'uit' = off, or a holiday id. */
+  forcedHoliday: HolidayId | 'auto' | 'uit';
   /** Debug controls; shown while the mouse moves. */
   debug: DebugConfig | null;
 }
@@ -106,9 +106,9 @@ export const Screen = ({
       )}
 
       <SeasonalOverlay
-        season={forcedSeason ?? seasonOf(now)}
+        season={forcedSeason === 'auto' ? seasonOf(now) : forcedSeason === 'uit' ? null : forcedSeason}
         weather={forcedWeather === 'auto' ? weatherLive : forcedWeather === 'uit' ? null : forcedWeather}
-        holiday={forcedHoliday ?? holidayOf(now)}
+        holiday={forcedHoliday === 'auto' ? holidayOf(now) : forcedHoliday === 'uit' ? null : forcedHoliday}
       />
 
       <div className="screen__ui">
