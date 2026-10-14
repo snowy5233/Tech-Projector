@@ -93,6 +93,7 @@ export const Screen = ({
   const forcedIndex = ARTWORK_MODE_IDS_INDEX[forcedMode] ?? null;
   const artworkOff = forcedMode === 'uit';
   const modeIndex = forcedIndex ?? (slot ? slotIndexOf(slot) : afterHours ? randomMode : 0);
+  const titleOff = !customTitleOn && !customTitle;
   const title = (customTitleOn && customTitle) || (slot ? slot.label : IDLE_TITLE[state.phase]);
   const range = slot
     ? `${formatSlotTime(slot.start)}–${formatSlotTime(slot.end)}`
@@ -125,12 +126,14 @@ export const Screen = ({
 
       <div className="screen__ui">
         <Clock now={now} showDate={false} className="clock--corner" />
-        <Slide
-          title={title}
-          range={(customRangeOn && customRange) || range}
-          nextSlot={state.nextSlot}
-          brand={afterHours}
-        />
+        {titleOff ? null : (
+          <Slide
+            title={title}
+            range={customRangeOn ? customRange || range : undefined}
+            nextSlot={state.nextSlot}
+            brand={afterHours}
+          />
+        )}
 
         {showCountdown && (
           <>
