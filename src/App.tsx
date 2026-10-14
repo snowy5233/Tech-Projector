@@ -44,6 +44,8 @@ const App = () => {
           forcedWeather={debug.forcedWeather}
           weatherLive={weatherLive}
           forcedHoliday={debug.forcedHoliday}
+          customTitle={debug.customTitle}
+          customRange={debug.customRange}
           debug={debug}
         />
       </CornerPinStage>

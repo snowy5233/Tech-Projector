@@ -148,6 +148,26 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
           ))}
         </select>
       </label>
+      <label className="debug__row">
+        <span className="u-eyebrow">tekst</span>
+        <input
+          className="debug__input"
+          type="text"
+          value={config.customTitle}
+          placeholder="auto (rooster)"
+          onChange={(event) => config.setCustomTitle(event.target.value)}
+        />
+      </label>
+      <label className="debug__row">
+        <span className="u-eyebrow">tijd</span>
+        <input
+          className="debug__input"
+          type="text"
+          value={config.customRange}
+          placeholder="auto (rooster)"
+          onChange={(event) => config.setCustomRange(event.target.value)}
+        />
+      </label>
     </div>
   );
 };

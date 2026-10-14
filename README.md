@@ -81,6 +81,8 @@ Move the mouse to reveal the debug panel (top left):
 | `?weer=<id>` | Force weather (regen, sneeuw, uit) |
 | `?feest=<id>` | Force one holiday effect (nieuwjaar, valentijn, pasen, koningsdag, sinterklaas, halloween, kerst) |
 | `?loc=lat,lon` | Fixed location for the weather lookup |
+| `?titel=<tekst>` | Custom slide title (overrides the schedule label) |
+| `?tijd=<bereik>` | Custom time range under the title (e.g. `?tijd=10:20-11:05`) |
 
 Artwork themes: halftone, tunnel, orbit, streams, grid, moire, solid, radar,
 bars, spiral, spark, ripple, waves, constellation, scan.

@@ -20,6 +20,12 @@ export interface DebugConfig {
   /** Locked holiday effect: 'auto' = clock date, 'uit' = off, or a holiday id. Seeded from `?feest`. */
   forcedHoliday: HolidayId | 'auto' | 'uit';
   setForcedHoliday: (holiday: HolidayId | 'auto' | 'uit') => void;
+  /** Custom slide title override; '' = the schedule decides. Seeded from `?titel=`. */
+  customTitle: string;
+  setCustomTitle: (title: string) => void;
+  /** Custom slide time range override; '' = schedule decides. Seeded from `?tijd=`. */
+  customRange: string;
+  setCustomRange: (range: string) => void;
 }
 
 /** Optional `?seizoen=<id|uit>` to force one seasonal effect. Unknown values are ignored. */
@@ -56,6 +62,12 @@ export const useDebugConfig = (): DebugConfig => {
   const [forcedSeason, setForcedSeason] = useState<Season | 'auto' | 'uit'>(forcedSeasonFromUrl);
   const [forcedWeather, setForcedWeather] = useState<Weather | 'auto' | 'uit'>(forcedWeatherFromUrl);
   const [forcedHoliday, setForcedHoliday] = useState<HolidayId | 'auto' | 'uit'>(forcedHolidayFromUrl);
+  const [customTitle, setCustomTitle] = useState<string>(
+    () => new URLSearchParams(window.location.search).get('titel') ?? '',
+  );
+  const [customRange, setCustomRange] = useState<string>(
+    () => new URLSearchParams(window.location.search).get('tijd') ?? '',
+  );
   return {
     clockOffsetMs,
     setClockOffsetMs,
@@ -67,5 +79,9 @@ export const useDebugConfig = (): DebugConfig => {
     setForcedWeather,
     forcedHoliday,
     setForcedHoliday,
+    customTitle,
+    setCustomTitle,
+    customRange,
+    setCustomRange,
   };
 };
