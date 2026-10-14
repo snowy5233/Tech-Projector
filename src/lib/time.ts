@@ -48,7 +48,7 @@ export const formatEventCountdownNl = (from: Date): string => {
   const hours = Math.floor((total % 86400) / 3600);
   const minutes = Math.floor((total % 3600) / 60);
   const seconds = total % 60;
-  return `${days} Dagen ${pad2(hours)} uren ${pad2(minutes)} Minuten ${pad2(seconds)} Seconden`;
+  return `Nog ${days} dagen ${pad2(hours)} uren ${pad2(minutes)} minuten ${pad2(seconds)} seconden tot de vakantie!`;
 };
 
 export const minutesOfDay = (date: Date): number =>

@@ -104,7 +104,7 @@ export const Screen = ({
       ? 0.4
       : 0.12;
 
-  const countdownText = `nog ${formatEventCountdownNl(now)} tot de vakantie!`;
+  const countdownText = formatEventCountdownNl(now);
   const glitchStyle = { '--glitch': eventCountdownGlitchLevel(now) } as CSSProperties;
   const showCountdown = !isCountdownPassed(now);
 
