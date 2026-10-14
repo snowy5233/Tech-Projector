@@ -17,7 +17,7 @@ npm run build    # production build in dist/
 ```
 
 The page clicks into fullscreen. Corner-pin keystone handles appear while the
-mouse moves; the debug panel does too.
+mouse moves; the control panel does too.
 
 ## Deployen
 
@@ -57,9 +57,9 @@ The screen layers several particle effects, all monochrome:
 Effects stack: op kerst zie je winterse sneeuw én kerstballen, plus regen
 als het regent.
 
-## Debug panel
+## Control panel (paneel)
 
-Move the mouse to reveal the debug panel (top left):
+Move the mouse to reveal the control panel (top left):
 
 - **tijd** — simulate the clock (time + weekday) to preview any phase
 - **thema** — lock the artwork theme, `auto (rooster)` follows the schedule,

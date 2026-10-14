@@ -21,8 +21,8 @@ export interface DebugPanelProps {
 }
 
 /**
- * Preview chrome: shifts the simulated clock (time + day) and locks the artwork
- * theme. Only visible while the mouse moves, like the calibration bar, so a
+ * Control panel: shifts the simulated clock (time + day), locks the artwork
+ * theme, effects and overrides the slide text. Only visible while the mouse moves, like the calibration bar, so a
  * quiet projection stays clean.
  */
 export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPanelProps) => {
@@ -40,7 +40,7 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
       data-ui-layer="debug"
     >
       <header className="debug__header">
-        <span className="u-eyebrow debug__label">debug</span>
+        <span className="u-eyebrow debug__label">paneel</span>
         <span className="u-eyebrow u-mono debug__phase">{phase}</span>
       </header>
 
