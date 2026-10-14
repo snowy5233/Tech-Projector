@@ -187,17 +187,43 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
       </label>
       <label className="debug__row">
         <span className="u-eyebrow">snelheid</span>
-        <select
-          className="debug__input"
-          value={config.speed}
-          onChange={(event) => config.setSpeed(Number(event.target.value))}
-        >
-          {SPEEDS.map((value) => (
-            <option key={value} value={value}>
-              {value}x
-            </option>
-          ))}
-        </select>
+        <span className="debug__controls">
+          <select
+            className="debug__input"
+            value={config.customSpeed ? 'eigen' : config.speed}
+            onChange={(event) => {
+              if (event.target.value === 'eigen') {
+                const current = config.speed > 0 ? config.speed : 1;
+                config.setCustomSpeed(String(current));
+                config.setSpeed(current);
+              } else {
+                config.setCustomSpeed('');
+                config.setSpeed(Number(event.target.value));
+              }
+            }}
+          >
+            {SPEEDS.map((value) => (
+              <option key={value} value={value}>
+                {value}x
+              </option>
+            ))}
+            <option value="eigen">eigen</option>
+          </select>
+          {config.customSpeed !== '' && (
+            <input
+              className="debug__input"
+              type="number"
+              min="0.1"
+              step="0.1"
+              value={config.customSpeed}
+              onChange={(event) => {
+                config.setCustomSpeed(event.target.value);
+                const parsed = Number(event.target.value);
+                if (Number.isFinite(parsed) && parsed > 0) config.setSpeed(parsed);
+              }}
+            />
+          )}
+        </span>
       </label>
     </div>
   );

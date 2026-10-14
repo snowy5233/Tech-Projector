@@ -35,6 +35,9 @@ export interface DebugConfig {
   /** Animation speed multiplier for artwork and particles. Seeded from `?snelheid=`. */
   speed: number;
   setSpeed: (speed: number) => void;
+  /** Raw text of the custom speed input; '' = preset in use. */
+  customSpeed: string;
+  setCustomSpeed: (value: string) => void;
 }
 
 export const SPEEDS = [0.5, 1, 1.5, 2, 3];
@@ -43,7 +46,15 @@ export const SPEEDS = [0.5, 1, 1.5, 2, 3];
 const speedFromUrl = (): number => {
   const value = new URLSearchParams(window.location.search).get('snelheid');
   const parsed = value === null ? NaN : Number(value);
-  return SPEEDS.includes(parsed) ? parsed : 1;
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+};
+
+/** Any positive number from `?snelheid=` that is not a preset becomes the custom value. */
+const customSpeedFromUrl = (): string => {
+  const value = new URLSearchParams(window.location.search).get('snelheid');
+  if (value === null) return '';
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 && !SPEEDS.includes(parsed) ? value : '';
 };
 
 /** Optional `?seizoen=<id|uit>` to force one seasonal effect. Unknown values are ignored. */
@@ -89,6 +100,7 @@ export const useDebugConfig = (): DebugConfig => {
   const [customTitleOn, setCustomTitleOn] = useState(true);
   const [customRangeOn, setCustomRangeOn] = useState(true);
   const [speed, setSpeed] = useState<number>(speedFromUrl);
+  const [customSpeed, setCustomSpeed] = useState<string>(customSpeedFromUrl);
   return {
     clockOffsetMs,
     setClockOffsetMs,
@@ -110,5 +122,7 @@ export const useDebugConfig = (): DebugConfig => {
     setCustomRangeOn,
     speed,
     setSpeed,
+    customSpeed,
+    setCustomSpeed,
   };
 };
