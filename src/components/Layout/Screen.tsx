@@ -93,7 +93,7 @@ export const Screen = ({
   const forcedIndex = ARTWORK_MODE_IDS_INDEX[forcedMode] ?? null;
   const artworkOff = forcedMode === 'uit';
   const modeIndex = forcedIndex ?? (slot ? slotIndexOf(slot) : afterHours ? randomMode : 0);
-  const titleOff = !customTitleOn && !customTitle;
+  const titleOff = !customTitleOn;
   const title = (customTitleOn && customTitle) || (slot ? slot.label : IDLE_TITLE[state.phase]);
   const range = slot
     ? `${formatSlotTime(slot.start)}–${formatSlotTime(slot.end)}`
