@@ -4,7 +4,7 @@ import { ARTWORK_MODE_IDS } from '../Artwork/createArtworkModes';
 import { Button } from '../ui/Button';
 import { SEASONS, seasonOf, type Season, type Weather } from '../Seasonal/SeasonalOverlay';
 import { HOLIDAY_IDS, holidayOf, type HolidayId } from '../../lib/holidays';
-import { SPEEDS } from '../../hooks/useDebugConfig';
+import { SPEEDS, SIZE_SCALES } from '../../hooks/useDebugConfig';
 import './debug.css';
 
 const DAYS = ['zo', 'ma', 'di', 'wo', 'do', 'vr', 'za'];
@@ -224,6 +224,20 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
             />
           )}
         </span>
+      </label>
+      <label className="debug__row">
+        <span className="u-eyebrow">grootte</span>
+        <select
+          className="debug__input"
+          value={config.sizeScale}
+          onChange={(event) => config.setSizeScale(Number(event.target.value))}
+        >
+          {SIZE_SCALES.map((value) => (
+            <option key={value} value={value}>
+              {value}x
+            </option>
+          ))}
+        </select>
       </label>
     </div>
   );

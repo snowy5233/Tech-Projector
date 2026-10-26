@@ -54,7 +54,7 @@ const spawn = (width: number, height: number, kind: ParticleKind): Particle => (
   kind,
   x: Math.random() * width,
   y: kind === 'zomer' || kind === 'nieuwjaar' ? height + Math.random() * height : -Math.random() * height,
-  size: 7 + Math.random() * 9,
+  size: 14 + Math.random() * 18,
   speed:
     kind === 'zomer' || kind === 'nieuwjaar'
       ? -(6 + Math.random() * 10)
@@ -77,6 +77,8 @@ export interface SeasonalOverlayProps {
   holiday?: HolidayId | null;
   /** Animation speed multiplier. */
   speed?: number;
+  /** Particle size multiplier. */
+  sizeScale?: number;
 }
 
 /**
@@ -392,15 +394,17 @@ const drawPepernoot = (ctx: CanvasRenderingContext2D, p: Particle) => {
   ctx.fill();
 };
 
-const drawParticle = (
+const drawParticleScaled = (
   ctx: CanvasRenderingContext2D,
   p: Particle,
   time: number,
+  scale: number,
 ) => {
   ctx.save();
   ctx.globalAlpha = p.alpha;
   ctx.fillStyle = '#fff';
   ctx.translate(p.x, p.y);
+  if (scale !== 1) ctx.scale(scale, scale);
   switch (p.kind) {
     case 'herfst':
       drawLeaf(ctx, p);
@@ -452,10 +456,11 @@ const drawParticle = (
  * Seizoens- en feestdag-effecten bovenop het artwork, onder de interface.
  * Seizoen uit de klok, weer (regen/sneeuw) uit useWeather, feestdag uit de datum.
  */
-export const SeasonalOverlay = ({ season, weather = null, holiday = null, speed = 1 }: SeasonalOverlayProps) => {
+export const SeasonalOverlay = ({ season, weather = null, holiday = null, speed = 1, sizeScale = 1 }: SeasonalOverlayProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const effectsRef = useRef<string>('');
   const speedRef = useRef(speed);
+  const sizeRef = useRef(sizeScale);
   const kindsOf = () => {
     const kinds: ParticleKind[] = [];
     if (season) kinds.push(season);
@@ -465,6 +470,7 @@ export const SeasonalOverlay = ({ season, weather = null, holiday = null, speed 
   };
   const signature = kindsOf().join('+');
   speedRef.current = speed;
+  sizeRef.current = sizeScale;
   if (effectsRef.current !== signature) {
     effectsRef.current = signature;
   }
@@ -565,7 +571,7 @@ export const SeasonalOverlay = ({ season, weather = null, holiday = null, speed 
         if (p.kind === 'regen' && p.x < -20) {
           p.x = width + 10;
         }
-        drawParticle(ctx, p, time);
+        drawParticleScaled(ctx, p, time, sizeRef.current);
       }
     };
 

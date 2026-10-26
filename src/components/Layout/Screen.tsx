@@ -66,6 +66,8 @@ export interface ScreenProps {
   customRangeOn: boolean;
   /** Animation speed multiplier for artwork and particles. */
   speed: number;
+  /** Particle size multiplier. */
+  sizeScale: number;
   /** Debug controls; shown while the mouse moves. */
   debug: DebugConfig | null;
 }
@@ -87,6 +89,7 @@ export const Screen = ({
   customRange,
   customRangeOn,
   speed,
+  sizeScale,
   debug,
 }: ScreenProps) => {
   const slot = state.currentSlot;
@@ -127,6 +130,7 @@ export const Screen = ({
         weather={forcedWeather === 'auto' ? weatherLive : forcedWeather === 'uit' ? null : forcedWeather}
         holiday={forcedHoliday === 'auto' ? holidayOf(now) : forcedHoliday === 'uit' ? null : forcedHoliday}
         speed={speed}
+        sizeScale={sizeScale}
       />
 
       <div className="screen__ui">

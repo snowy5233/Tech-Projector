@@ -83,7 +83,8 @@ Move the mouse to reveal the control panel (top left):
 | `?loc=lat,lon` | Fixed location for the weather lookup |
 | `?titel=<tekst>` | Custom slide title (overrides the schedule label) |
 | `?tijd=<bereik>` | Custom time range under the title (e.g. `?tijd=10:20-11:05`) |
-| `?snelheid=<x>` | Animation speed for artwork and particles (0.5, 1, 1.5, 2, 3) |
+| `?snelheid=<x>` | Animation speed for artwork and particles (any positive value) |
+| `?grootte=<x>` | Particle size multiplier (any positive value) |
 
 Artwork themes: halftone, tunnel, orbit, streams, grid, moire, solid, radar,
 bars, spiral, spark, ripple, waves, constellation, scan.

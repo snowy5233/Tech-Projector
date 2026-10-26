@@ -38,9 +38,22 @@ export interface DebugConfig {
   /** Raw text of the custom speed input; '' = preset in use. */
   customSpeed: string;
   setCustomSpeed: (value: string) => void;
+  /** Particle size multiplier. Seeded from `?grootte=`. */
+  sizeScale: number;
+  setSizeScale: (scale: number) => void;
 }
 
 export const SPEEDS = [0.5, 1, 1.5, 2, 3];
+
+/** Particle size presets, van subtiel tot goof. */
+export const SIZE_SCALES = [0.5, 1, 2, 3, 4, 5, 10, 20, 50];
+
+/** Optional `?grootte=<x>` to scale particle size. */
+const sizeScaleFromUrl = (): number => {
+  const value = new URLSearchParams(window.location.search).get('grootte');
+  const parsed = value === null ? NaN : Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+};
 
 /** Optional `?snelheid=<0.5|1|1.5|2|3>` to scale animation speed. */
 const speedFromUrl = (): number => {
@@ -101,6 +114,7 @@ export const useDebugConfig = (): DebugConfig => {
   const [customRangeOn, setCustomRangeOn] = useState(true);
   const [speed, setSpeed] = useState<number>(speedFromUrl);
   const [customSpeed, setCustomSpeed] = useState<string>(customSpeedFromUrl);
+  const [sizeScale, setSizeScale] = useState<number>(sizeScaleFromUrl);
   return {
     clockOffsetMs,
     setClockOffsetMs,
@@ -124,5 +138,7 @@ export const useDebugConfig = (): DebugConfig => {
     setSpeed,
     customSpeed,
     setCustomSpeed,
+    sizeScale,
+    setSizeScale,
   };
 };

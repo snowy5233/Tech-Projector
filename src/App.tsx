@@ -49,6 +49,7 @@ const App = () => {
           customRange={debug.customRange}
           customRangeOn={debug.customRangeOn}
           speed={debug.speed}
+          sizeScale={debug.sizeScale}
           debug={debug}
         />
       </CornerPinStage>
