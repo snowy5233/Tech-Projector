@@ -36,8 +36,7 @@ export const DayOverview = ({ state }: DayOverviewProps) => {
             </span>
             {isCurrent && (
               <span className="day-overview__remaining">
-                {String(Math.floor(remaining / 60)).padStart(2, '0')}:
-                {String(remaining % 60).padStart(2, '0')}
+                {remaining.toFixed(2)}
               </span>
             )}
           </li>
