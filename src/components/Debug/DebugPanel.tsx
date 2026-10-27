@@ -258,6 +258,19 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
         </span>
       </label>
       <label className="debug__row">
+        <span className="u-eyebrow">lesuren</span>
+        <span className="debug__controls">
+          <select
+            className="debug__input"
+            value={config.dayOverviewOn ? 'aan' : 'uit'}
+            onChange={(event) => config.setDayOverviewOn(event.target.value === 'aan')}
+          >
+            <option value="aan">aan</option>
+            <option value="uit">uit</option>
+          </select>
+        </span>
+      </label>
+      <label className="debug__row">
         <span className="u-eyebrow">grootte</span>
         <select
           className="debug__input"

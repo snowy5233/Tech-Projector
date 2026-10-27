@@ -53,6 +53,7 @@ const App = () => {
           blendOn={debug.blendOn}
           ticker={debug.ticker}
           tickerOn={debug.tickerOn}
+          dayOverviewOn={debug.dayOverviewOn}
           debug={debug}
         />
       </CornerPinStage>

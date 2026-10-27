@@ -87,6 +87,7 @@ Move the mouse to reveal the control panel (top left):
 | `?grootte=<x>` | Particle size multiplier (any positive value) |
 | `?overgang=uit` | Disable the transition blend |
 | `?mededeling=<tekst>` | Scrolling ticker text at the bottom |
+| `?lesuren=uit` | Hide the day overview bottom-right |
 
 Artwork themes: halftone, tunnel, orbit, streams, grid, moire, solid, radar,
 bars, spiral, spark, ripple, waves, constellation, scan.

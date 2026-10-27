@@ -15,6 +15,7 @@ import { Clock } from '../Clock/Clock';
 import { DebugPanel } from '../Debug/DebugPanel';
 import { Slide, slotIndexOf } from '../Slide/Slide';
 import { Ticker } from '../Ticker/Ticker';
+import { DayOverview } from '../DayOverview/DayOverview';
 import type { Season } from '../Seasonal/SeasonalOverlay';
 import { SeasonalOverlay, seasonOf, type Weather } from '../Seasonal/SeasonalOverlay';
 import { holidayOf, type HolidayId } from '../../lib/holidays';
@@ -75,6 +76,8 @@ export interface ScreenProps {
   ticker: string;
   /** Whether the ticker is shown. */
   tickerOn: boolean;
+  /** Whether the day overview (lesuren) is shown bottom-right. */
+  dayOverviewOn: boolean;
   /** Debug controls; shown while the mouse moves. */
   debug: DebugConfig | null;
 }
@@ -100,6 +103,7 @@ export const Screen = ({
   blendOn,
   ticker,
   tickerOn,
+  dayOverviewOn,
   debug,
 }: ScreenProps) => {
   const slot = state.currentSlot;
@@ -177,6 +181,8 @@ export const Screen = ({
       )}
 
       {tickerOn && ticker !== '' && <Ticker text={ticker} />}
+
+      {dayOverviewOn && <DayOverview state={state} />}
 
       <CalibrateBar
         visible={pointerActive}

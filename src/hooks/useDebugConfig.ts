@@ -50,6 +50,9 @@ export interface DebugConfig {
   /** Whether the ticker is shown. */
   tickerOn: boolean;
   setTickerOn: (on: boolean) => void;
+  /** Whether the day overview (lesuren) is shown bottom-right. */
+  dayOverviewOn: boolean;
+  setDayOverviewOn: (on: boolean) => void;
 }
 
 export const SPEEDS = [0.5, 1, 1.5, 2, 3];
@@ -131,6 +134,9 @@ export const useDebugConfig = (): DebugConfig => {
     () => new URLSearchParams(window.location.search).get('mededeling') ?? '',
   );
   const [tickerOn, setTickerOn] = useState(true);
+  const [dayOverviewOn, setDayOverviewOn] = useState(
+    () => new URLSearchParams(window.location.search).get('lesuren') !== 'uit',
+  );
   return {
     clockOffsetMs,
     setClockOffsetMs,
@@ -162,5 +168,7 @@ export const useDebugConfig = (): DebugConfig => {
     setTicker,
     tickerOn,
     setTickerOn,
+    dayOverviewOn,
+    setDayOverviewOn,
   };
 };
