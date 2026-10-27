@@ -41,6 +41,15 @@ export interface DebugConfig {
   /** Particle size multiplier. Seeded from `?grootte=`. */
   sizeScale: number;
   setSizeScale: (scale: number) => void;
+  /** Overgangsblend: mix themes around the lesson switch. */
+  blendOn: boolean;
+  setBlendOn: (on: boolean) => void;
+  /** Scrollende mededeling ticker text; '' = hidden. Seeded from `?mededeling=`. */
+  ticker: string;
+  setTicker: (text: string) => void;
+  /** Whether the ticker is shown. */
+  tickerOn: boolean;
+  setTickerOn: (on: boolean) => void;
 }
 
 export const SPEEDS = [0.5, 1, 1.5, 2, 3];
@@ -115,6 +124,13 @@ export const useDebugConfig = (): DebugConfig => {
   const [speed, setSpeed] = useState<number>(speedFromUrl);
   const [customSpeed, setCustomSpeed] = useState<string>(customSpeedFromUrl);
   const [sizeScale, setSizeScale] = useState<number>(sizeScaleFromUrl);
+  const [blendOn, setBlendOn] = useState(
+    () => new URLSearchParams(window.location.search).get('overgang') !== 'uit',
+  );
+  const [ticker, setTicker] = useState<string>(
+    () => new URLSearchParams(window.location.search).get('mededeling') ?? '',
+  );
+  const [tickerOn, setTickerOn] = useState(true);
   return {
     clockOffsetMs,
     setClockOffsetMs,
@@ -140,5 +156,11 @@ export const useDebugConfig = (): DebugConfig => {
     setCustomSpeed,
     sizeScale,
     setSizeScale,
+    blendOn,
+    setBlendOn,
+    ticker,
+    setTicker,
+    tickerOn,
+    setTickerOn,
   };
 };

@@ -226,6 +226,38 @@ export const DebugPanel = ({ config, now, phase, visible, weatherLive }: DebugPa
         </span>
       </label>
       <label className="debug__row">
+        <span className="u-eyebrow">overgang</span>
+        <span className="debug__controls">
+          <select
+            className="debug__input"
+            value={config.blendOn ? 'aan' : 'uit'}
+            onChange={(event) => config.setBlendOn(event.target.value === 'aan')}
+          >
+            <option value="aan">aan</option>
+            <option value="uit">uit</option>
+          </select>
+        </span>
+      </label>
+      <label className="debug__row">
+        <span className="u-eyebrow">mededeling</span>
+        <span className="debug__controls">
+          <input
+            className="debug__input"
+            type="text"
+            value={config.ticker}
+            placeholder="nieuws..."
+            onChange={(event) => config.setTicker(event.target.value)}
+          />
+          <Button
+            size="sm"
+            onClick={() => config.setTickerOn(!config.tickerOn)}
+            disabled={!config.ticker}
+          >
+            {config.tickerOn ? 'aan' : 'uit'}
+          </Button>
+        </span>
+      </label>
+      <label className="debug__row">
         <span className="u-eyebrow">grootte</span>
         <select
           className="debug__input"

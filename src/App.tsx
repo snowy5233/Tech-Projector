@@ -50,6 +50,9 @@ const App = () => {
           customRangeOn={debug.customRangeOn}
           speed={debug.speed}
           sizeScale={debug.sizeScale}
+          blendOn={debug.blendOn}
+          ticker={debug.ticker}
+          tickerOn={debug.tickerOn}
           debug={debug}
         />
       </CornerPinStage>

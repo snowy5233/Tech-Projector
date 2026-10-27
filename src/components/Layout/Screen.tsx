@@ -14,6 +14,7 @@ import { ArtworkCanvas } from '../Artwork/ArtworkCanvas';
 import { Clock } from '../Clock/Clock';
 import { DebugPanel } from '../Debug/DebugPanel';
 import { Slide, slotIndexOf } from '../Slide/Slide';
+import { Ticker } from '../Ticker/Ticker';
 import type { Season } from '../Seasonal/SeasonalOverlay';
 import { SeasonalOverlay, seasonOf, type Weather } from '../Seasonal/SeasonalOverlay';
 import { holidayOf, type HolidayId } from '../../lib/holidays';
@@ -68,6 +69,12 @@ export interface ScreenProps {
   speed: number;
   /** Particle size multiplier. */
   sizeScale: number;
+  /** Overgangsblend toggle: mix themes around the lesson switch. */
+  blendOn: boolean;
+  /** Scrollende mededeling; '' = hidden. */
+  ticker: string;
+  /** Whether the ticker is shown. */
+  tickerOn: boolean;
   /** Debug controls; shown while the mouse moves. */
   debug: DebugConfig | null;
 }
@@ -90,6 +97,9 @@ export const Screen = ({
   customRangeOn,
   speed,
   sizeScale,
+  blendOn,
+  ticker,
+  tickerOn,
   debug,
 }: ScreenProps) => {
   const slot = state.currentSlot;
@@ -104,6 +114,11 @@ export const Screen = ({
   const range = slot
     ? `${formatSlotTime(slot.start)}–${formatSlotTime(slot.end)}`
     : undefined;
+  // Overgangsblend: laatste minuut van een slot en eerste minuut erna.
+  const nextModeIndex = slot && state.nextSlot ? slotIndexOf(state.nextSlot) : null;
+  const blendRemaining = slot && state.secondsUntilChange < 60 ? 1 - state.secondsUntilChange / 60 : 0;
+  const blendElapsed = slot && state.slotProgress < 1 / 45 ? state.slotProgress * 45 : 0;
+  const blend = blendOn ? Math.min(1, Math.max(blendRemaining, blendElapsed)) : 0;
   const density = slot
     ? densityForProgress(state.slotProgress)
     : afterHours
@@ -122,6 +137,8 @@ export const Screen = ({
           energy={ENERGY[state.phase]}
           density={density}
           speed={speed}
+          nextModeIndex={nextModeIndex}
+          blend={blend}
         />
       )}
 
@@ -158,6 +175,8 @@ export const Screen = ({
           weatherLive={weatherLive ?? 'droog'}
         />
       )}
+
+      {tickerOn && ticker !== '' && <Ticker text={ticker} />}
 
       <CalibrateBar
         visible={pointerActive}

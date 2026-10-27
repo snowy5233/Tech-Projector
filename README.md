@@ -85,6 +85,8 @@ Move the mouse to reveal the control panel (top left):
 | `?tijd=<bereik>` | Custom time range under the title (e.g. `?tijd=10:20-11:05`) |
 | `?snelheid=<x>` | Animation speed for artwork and particles (any positive value) |
 | `?grootte=<x>` | Particle size multiplier (any positive value) |
+| `?overgang=uit` | Disable the transition blend |
+| `?mededeling=<tekst>` | Scrolling ticker text at the bottom |
 
 Artwork themes: halftone, tunnel, orbit, streams, grid, moire, solid, radar,
 bars, spiral, spark, ripple, waves, constellation, scan.

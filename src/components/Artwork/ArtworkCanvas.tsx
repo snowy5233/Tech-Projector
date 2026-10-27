@@ -15,19 +15,27 @@ export interface ArtworkCanvasProps {
   density?: number;
   /** Animation speed multiplier. */
   speed?: number;
+  /** Upcoming mode to blend into during the last minute of a slot. */
+  nextModeIndex?: number | null;
+  /** 0..1 blend toward nextModeIndex; 0 = fully current. */
+  blend?: number;
 }
 
-export const ArtworkCanvas = ({ modeIndex, energy = 0.3, density = 0.2, speed = 1 }: ArtworkCanvasProps) => {
+export const ArtworkCanvas = ({ modeIndex, energy = 0.3, density = 0.2, speed = 1, nextModeIndex = null, blend = 0 }: ArtworkCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const energyRef = useRef(energy);
   const densityRef = useRef(density);
   const speedRef = useRef(speed);
+  const nextModeRef = useRef<number | null>(nextModeIndex);
+  const blendRef = useRef(blend);
   const modeRef = useRef(modeIndex);
   const fromRef = useRef(modeIndex);
   const mixRef = useRef(1);
   energyRef.current = energy;
   densityRef.current = density;
   speedRef.current = speed;
+  nextModeRef.current = nextModeIndex;
+  blendRef.current = blend;
 
   if (modeIndex !== modeRef.current) {
     fromRef.current = modeRef.current;
@@ -114,6 +122,16 @@ export const ArtworkCanvas = ({ modeIndex, energy = 0.3, density = 0.2, speed = 
       } else {
         previousMode.draw({ ...base, presence: (1 - mix) * presence });
         current.draw({ ...base, presence: mix * presence });
+      }
+
+      // Overgangsblend: mix in the upcoming lesson's mode near the slot edge.
+      const nextBlend = blendRef.current;
+      const nextIdx = nextModeRef.current;
+      if (nextBlend > 0 && nextIdx !== null) {
+        const nextMode = modes[wrap(nextIdx)];
+        if (nextMode && nextMode !== current) {
+          nextMode.draw({ ...base, presence: nextBlend * presence });
+        }
       }
     };
 
