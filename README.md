@@ -44,7 +44,7 @@ The screen layers several particle effects, all monochrome:
   - herfst (sep–nov): vallende bladeren met nerven
   - winter (dec–feb): sneeuwvlokken met kristaltakken
 - **Weer** — live regen of sneeuw via Open-Meteo (geolocation, fallback
-  Utrecht; geen API-sleutel nodig). Ververst elke 30 min.
+  Epe; geen API-sleutel nodig). Ververst elke 30 min.
 - **Feest** — automatisch op de datum:
   - nieuwjaar (1 jan): vuurwerk
   - valentijn (14 feb): harten

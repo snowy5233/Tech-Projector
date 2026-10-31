@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import type { Weather } from '../components/Seasonal/SeasonalOverlay';
 
-/** Vast fallback-punt (Utrecht) als locatie niet beschikbaar is. */
-const DEFAULT_LAT = 52.0907;
-const DEFAULT_LON = 5.1214;
+/** Vast fallback-punt (Epe) als locatie niet beschikbaar is. */
+const DEFAULT_LAT = 52.3491;
+const DEFAULT_LON = 5.8339;
 const CACHE_KEY = 'weer-cache';
 const CACHE_TTL_MS = 30 * 60 * 1000;
 
@@ -54,7 +54,7 @@ const fetchWeather = async (lat: number, lon: number): Promise<Weather> => {
 
 /**
  * Live weer via Open-Meteo (gratis, zonder API-sleutel). Locatie: `?loc=lat,lon`,
- * anders browser-geolocatie, anders Utrecht. Elke 30 minuten ververst.
+ * anders browser-geolocatie, anders Epe. Elke 30 minuten ververst.
  */
 export const useWeather = (): Weather => {
   const [weather, setWeather] = useState<Weather>(readCachedWeather);
