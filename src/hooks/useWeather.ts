@@ -54,7 +54,7 @@ const fetchWeather = async (lat: number, lon: number): Promise<Weather> => {
 
 /**
  * Live weer via Open-Meteo (gratis, zonder API-sleutel). Locatie: `?loc=lat,lon`,
- * anders browser-geolocatie, anders Epe. Elke 30 minuten ververst.
+ * of Epe als standaard (geen GPS). Elke 30 minuten ververst.
  */
 export const useWeather = (): Weather => {
   const [weather, setWeather] = useState<Weather>(readCachedWeather);
@@ -63,23 +63,10 @@ export const useWeather = (): Weather => {
     let cancelled = false;
 
     const load = async () => {
-      let lat = DEFAULT_LAT;
-      let lon = DEFAULT_LON;
+      // Altijd Epe, tenzij een vaste locatie via ?loc= is opgegeven. Geen GPS.
       const fixed = readLocation();
-      if (fixed) {
-        lat = fixed.lat;
-        lon = fixed.lon;
-      } else if (navigator.geolocation) {
-        const position = await new Promise<GeolocationPosition | null>((resolve) => {
-          navigator.geolocation.getCurrentPosition(resolve, () => resolve(null), {
-            timeout: 5000,
-          });
-        });
-        if (position) {
-          lat = position.coords.latitude;
-          lon = position.coords.longitude;
-        }
-      }
+      const lat = fixed?.lat ?? DEFAULT_LAT;
+      const lon = fixed?.lon ?? DEFAULT_LON;
       try {
         const result = await fetchWeather(lat, lon);
         if (cancelled || result === null) return;

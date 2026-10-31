@@ -43,8 +43,8 @@ The screen layers several particle effects, all monochrome:
   - zomer (jun–aug): stijgende, flikkerende vonken
   - herfst (sep–nov): vallende bladeren met nerven
   - winter (dec–feb): sneeuwvlokken met kristaltakken
-- **Weer** — live regen of sneeuw via Open-Meteo (geolocation, fallback
-  Epe; geen API-sleutel nodig). Ververst elke 30 min.
+- **Weer** — live regen of sneeuw via Open-Meteo (standaard Epe, of `?loc=`
+  voor een vaste locatie; geen GPS, geen API-sleutel nodig). Ververst elke 30 min.
 - **Feest** — automatisch op de datum:
   - nieuwjaar (1 jan): vuurwerk
   - valentijn (14 feb): harten
