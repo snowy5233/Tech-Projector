@@ -3,7 +3,9 @@
   left: calc(var(--u) * 1.6);
   top: calc(var(--u) * 8.5);
   margin: 0;
-  padding: 0;
+  /* Ondergrond-plaat: effecten verdwijnen hierachter, net als achter de klok. */
+  padding: calc(var(--u) * 0.4) calc(var(--u) * 0.7);
+  background: var(--black);
   list-style: none;
   font-size: calc(var(--u) * 1.45);
   line-height: 1.7;
