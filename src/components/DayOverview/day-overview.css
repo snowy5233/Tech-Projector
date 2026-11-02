@@ -17,7 +17,7 @@
   justify-content: flex-start;
   gap: 1.2em;
   align-items: baseline;
-  opacity: 0.32;
+  opacity: 0.6;
   transition: opacity 0.5s ease;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .day-overview__row--done {
-  opacity: 0.18;
+  opacity: 0.4;
 }
 
 .day-overview__label {
