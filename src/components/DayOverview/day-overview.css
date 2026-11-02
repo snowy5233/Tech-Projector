@@ -1,6 +1,6 @@
 .day-overview {
   position: absolute;
-  right: calc(var(--u) * 1.6);
+  left: calc(var(--u) * 1.6);
   top: calc(var(--u) * 8.5);
   margin: 0;
   padding: 0;
@@ -8,13 +8,13 @@
   font-size: calc(var(--u) * 2.1);
   line-height: 1.9;
   letter-spacing: 0.04em;
-  text-align: right;
+  text-align: left;
   pointer-events: none;
 }
 
 .day-overview__row {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 1.2em;
   align-items: baseline;
   opacity: 0.32;
