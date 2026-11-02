@@ -5,8 +5,8 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: calc(var(--u) * 2.1);
-  line-height: 1.9;
+  font-size: calc(var(--u) * 1.45);
+  line-height: 1.7;
   letter-spacing: 0.04em;
   text-align: left;
   pointer-events: none;
