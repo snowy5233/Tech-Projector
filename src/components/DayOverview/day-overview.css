@@ -1,13 +1,13 @@
 .day-overview {
   position: absolute;
-  right: 3vw;
-  top: 4vh;
+  right: calc(var(--u) * 1.6);
+  top: calc(var(--u) * 8.5);
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 12px;
-  line-height: 1.75;
-  letter-spacing: 0.05em;
+  font-size: calc(var(--u) * 2.1);
+  line-height: 1.9;
+  letter-spacing: 0.04em;
   text-align: right;
   pointer-events: none;
 }
