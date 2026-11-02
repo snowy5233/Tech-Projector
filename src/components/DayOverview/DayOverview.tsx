@@ -2,14 +2,13 @@ import { formatSlotTime, SLOTS, type Slot } from '../../data/schedule';
 import type { ScheduleState } from '../../hooks/useScheduleState';
 import './day-overview.css';
 
-/** "mm:ss:hh" — minuten : seconden : honderdsten. */
+/** "mm:ss" — minuten : seconden. */
 const formatRemaining = (totalSeconds: number): string => {
   const clamped = Math.max(0, totalSeconds);
   const minutes = Math.floor(clamped / 60);
   const seconds = Math.floor(clamped % 60);
-  const hundredths = Math.round((clamped - Math.floor(clamped)) * 100) % 100;
   const pad = (value: number) => String(value).padStart(2, '0');
-  return `${pad(minutes)}:${pad(seconds)}:${pad(hundredths)}`;
+  return `${pad(minutes)}:${pad(seconds)}`;
 };
 
 export interface DayOverviewProps {
