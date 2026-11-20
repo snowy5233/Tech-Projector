@@ -9,6 +9,7 @@ import { ARTWORK_MODE_IDS } from '../Artwork/createArtworkModes';
 import { SEASONS } from '../Seasonal/SeasonalOverlay';
 import { HOLIDAY_IDS } from '../../lib/holidays';
 import { SPEEDS, SIZE_SCALES } from '../../hooks/useDebugConfig';
+import { formatSlotTime, SLOTS } from '../../data/schedule';
 import './admin.css';
 
 /** Eenvoudige pin tegen per ongeluk bedienen. Verander deze hier. */
@@ -99,6 +100,42 @@ export const AdminPage = () => {
   return (
     <main className="admin">
       <h1>Beeld op afstand</h1>
+
+      <div className="voorbeeld" aria-hidden="true">
+        <div className="voorbeeld__scherm">
+          <div className="voorbeeld__thema">TECHLAB</div>
+          <div className="voorbeeld__lesuren" hidden={!beeld.lesurenOn}>
+            {SLOTS.map((slot) => (
+              <div key={slot.id} className="voorbeeld__lesuur">
+                {slot.label} {formatSlotTime(slot.start)}–{formatSlotTime(slot.end)}
+              </div>
+            ))}
+          </div>
+          <div className="voorbeeld__midden">
+            {beeld.titelOn && (
+              <div className="voorbeeld__titel">
+                {beeld.titel || '1e uur'}
+              </div>
+            )}
+            {beeld.titelOn && beeld.tijdOn && (
+              <div className="voorbeeld__tijd">
+                {beeld.tijd || '08:30–09:15'}
+              </div>
+            )}
+          </div>
+          {beeld.mededelingOn && beeld.mededeling && (
+            <div className="voorbeeld__ticker">{beeld.mededeling}</div>
+          )}
+          <div className="voorbeeld__klok">08:30</div>
+        </div>
+        <div className="voorbeeld__bijschrift">
+          thema: {beeld.thema ?? 'auto'} · seizoen: {beeld.seizoen ?? 'auto'} ·
+          weer: {beeld.weer ?? 'auto'} · feest: {beeld.feest ?? 'auto'} ·
+          snelheid: {String(beeld.snelheid ?? 1)}x · grootte: {String(beeld.grootte ?? 1)}x
+          {!beeld.lesurenOn && ' · lesuren uit'}
+          {!beeld.overgangOn && ' · overgang uit'}
+        </div>
+      </div>
 
       <label className="admin__row">
         <span>titel</span>

@@ -87,3 +87,86 @@
     width: 100%;
   }
 }
+
+/* Live voorbeeld van het projector-beeld. */
+.voorbeeld {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  margin: 0 0 24px;
+  max-width: 480px;
+}
+
+.voorbeeld__scherm {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.voorbeeld__klok {
+  padding: 10px 14px 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.voorbeeld__lesuren {
+  padding: 0 14px;
+  font-size: 8px;
+  line-height: 1.6;
+  opacity: 0.6;
+}
+
+.voorbeeld__lesuren em {
+  font-style: normal;
+  font-weight: 700;
+  opacity: 1;
+}
+
+.voorbeeld__midden {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.voorbeeld__titel {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.voorbeeld__tijd {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.voorbeeld__thema {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.voorbeeld__ticker {
+  padding: 0 14px 8px;
+  font-size: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.75;
+}
+
+.voorbeeld__bijschrift {
+  padding: 6px 14px;
+  font-size: 11px;
+  opacity: 0.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
