@@ -12,6 +12,5 @@
  * Leeg laten = functie uitgeschakeld; de site werkt dan gewoon lokaal.
  */
 export const firebaseConfig = {
-  /** Bijv. 'https://mijnproject-default-rtdb.europe-west1.firebasedatabase.app' */
-  databaseUrl: '',
+  databaseUrl: 'https://tech-projector-default-rtdb.europe-west1.firebasedatabase.app',
 };
