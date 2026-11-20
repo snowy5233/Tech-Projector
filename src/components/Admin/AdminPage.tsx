@@ -13,7 +13,7 @@ import { formatSlotTime, SLOTS } from '../../data/schedule';
 import './admin.css';
 
 /** Eenvoudige pin tegen per ongeluk bedienen. Verander deze hier. */
-const ADMIN_PIN = '1234';
+const ADMIN_PIN = '8181';
 
 const leeg: RemoteBeeld = {
   titel: '',
