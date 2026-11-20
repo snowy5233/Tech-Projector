@@ -1,0 +1,89 @@
+/* Admin-pagina (#admin): donker, monospace, telefoon-vriendelijk. */
+.admin {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  background: var(--black, #000);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  padding: max(6vh, 24px) 5vw;
+  box-sizing: border-box;
+}
+
+.admin h1 {
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 24px;
+}
+
+.admin p {
+  max-width: 32em;
+  line-height: 1.6;
+}
+
+.admin code {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 2px 6px;
+}
+
+.admin__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  flex-wrap: wrap;
+}
+
+.admin__row > span:first-child {
+  width: 6.5em;
+  flex: none;
+  opacity: 0.7;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.admin__row input[type='text'],
+.admin__row input[type='password'],
+.admin__row select {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  font: inherit;
+  padding: 10px 12px;
+  border-radius: 4px;
+}
+
+.admin__row select {
+  flex: none;
+  width: auto;
+}
+
+.admin__row button {
+  font: inherit;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.admin__verstuur {
+  flex: 1;
+}
+
+.admin__status {
+  opacity: 0.7;
+  font-size: 13px;
+  min-height: 1.4em;
+}
+
+@media (max-width: 600px) {
+  .admin__row > span:first-child {
+    width: 100%;
+  }
+}

@@ -91,3 +91,15 @@ Move the mouse to reveal the control panel (top left):
 
 Artwork themes: halftone, tunnel, orbit, streams, grid, moire, solid, radar,
 bars, spiral, spark, ripple, waves, constellation, scan.
+
+## Remote bediening (admin-paneel)
+
+Het beeld is op afstand te bedienen via Firebase Realtime Database:
+
+1. Maak op [console.firebase.google.com](https://console.firebase.google.com) een gratis project met een **Realtime Database** ( Europa, regels `{"rules": {".read": true, ".write": true}}`).
+2. Plak de `databaseURL` in `src/lib/firebase-config.ts` en deploy de site opnieuw.
+3. Open `<site-url>/#admin` op een telefoon of laptop, voer de pin in (`1234`, te wijzigen in `AdminPage.tsx`) en bedien alles: tekst, tijdbereik, mededeling, thema, seizoen, weer, feest, snelheid, grootte, lesuren, overgang.
+
+De projector leest de opdracht elke 5 seconden in — wis een veld (of "Reset alles") om terug te gaan naar het rooster.
+
+**Let op:** de openstaande regels betekenen dat iedereen met de project-URL kan schrijven. De pin is een lichte drempel; voor meer zekerheid zet je Firebase Authentication aan en pas je de regels aan.
