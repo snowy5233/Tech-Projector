@@ -12,5 +12,5 @@
  * Leeg laten = functie uitgeschakeld; de site werkt dan gewoon lokaal.
  */
 export const firebaseConfig = {
-  databaseUrl: 'https://tech-projector-default-rtdb.europe-west1.firebasedatabase.app',
+  databaseUrl: '',  // tijdelijk uitgeschakeld; plak de URL weer in om te activeren
 };
