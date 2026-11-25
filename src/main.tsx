@@ -13,3 +13,13 @@ createRoot(root).render(
     <App />
   </StrictMode>,
 );
+
+// Service worker: garandeert dat het beeld ook zonder internet blijft
+// werken (herstart van de mini-PC, wifi-storing, enz.).
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {
+      /* offline-boost is leuk-niet-nodig */
+    });
+  });
+}
