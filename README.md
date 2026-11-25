@@ -19,6 +19,10 @@ npm run build    # production build in dist/
 The page clicks into fullscreen. Corner-pin keystone handles appear while the
 mouse moves; the control panel does too.
 
+A service worker caches the app shell, so the screen also survives a fresh
+load without internet (wifi/ uitval, mini-PC herstart). The weather lookup
+fails silently and keeps the last known value.
+
 ## Deployen
 
 GitHub Pages serves the `gh-pages` branch (root). After changes on `main`:
